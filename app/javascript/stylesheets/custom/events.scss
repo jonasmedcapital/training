@@ -1,0 +1,182 @@
+.none-div {
+  display: none !important;
+}
+.card-live {
+  
+  box-shadow: 0px 7px 10px #086bac26;
+}
+.card-content {
+  padding: 2rem;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+.live-streaming {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  height: 100vh;  
+}
+.title-pre-live {
+  font-weight: bold;
+  color: #053b5e;
+  font-size: 1.5rem;
+}
+.title-live {
+  font-weight: bold;
+  color: #053b5e;
+  font-size: 2.5rem;
+}
+.live-img {
+  margin: 0 auto;
+  width: 22rem;
+  margin-bottom: 1rem;
+}
+  .img-live {
+  margin-bottom: 1rem;
+}
+.med-input {
+  background: #f5f5f5 !important;
+  font-size: 1.4rem !important;
+  width: 70% !important;
+  height: 3rem !important;
+  border: none !important;
+  outline: none !important;
+  padding: 0 !important;
+  // padding-left: 3rem !important;
+}
+
+.med-input-sm {
+  font-size: 0.85rem !important;
+}
+
+.med-input-icon {
+  z-index: 2;
+  margin-top: 0.2rem;
+  margin-left: 1rem;
+  position: absolute;
+}
+.med-input-icon i {
+  font-size: 1rem;
+  color: #086bac;
+}
+.border-btn {
+  width: 15rem !important;
+  border-radius: 2rem !important;
+}
+.live-streaming-video {
+  padding-top: 5rem;
+  align-items: center !important;
+  text-align: center !important;
+  justify-content: center;
+  height: 100vh;
+}
+.s-title-live {
+  font-size: 1rem;
+  color: #50514F;
+}
+.room-live {
+  border-radius: 10px !important;
+}
+.description-live {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #50514F;
+}
+.a-live{
+  text-transform: uppercase !important;
+  font-size: 1rem !important;
+}
+.s-description-live{
+  color: #50514F;
+}
+  .icon-description-live i{
+  margin: 0.5rem !important;
+}
+  .icon-description-live a{
+  font-size: 1.4rem;
+  color: #086bac;
+}
+  .icon-description-live a:hover{
+  color: #053b5e !important;
+}
+#liveCards {
+  display: flex !important;
+  justify-content: center !important;
+  align-content: center !important;
+}
+
+.stepper-horiz {
+  background-color: #fbfcff !important;
+}
+
+.stepper {
+  -webkit-box-align: center !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+  overflow: hidden !important;
+  padding: 1.5rem 1.5rem !important;
+  position: relative;
+  display: block !important;
+  background-color: #fbfcff !important;
+}
+.stepper-live {
+  background-color: #fbfcff;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: relative;
+}
+.live-step-icon {
+  font-size: 2rem !important;
+  color: #ddd !important;
+}
+.active-icon {
+  transition: 0.5s ease-in-out;
+  color: #26c485 !important;
+}
+.live-font-check {
+  color: #26c485 !important;
+}
+.acess-med {
+  transition: 0.5s ease-in;
+  color: #086bac !important;
+}
+
+.data-base-text {
+  font-size: 1.3rem !important;
+  text-align: center;
+}
+.upload-avatar {
+  color: #002E4C;
+  font-size: 10rem;
+}
+.event-title {
+  font-size: 1.4rem;
+  color: #086bac;
+}
+.card-img-event {
+  width: 100%;
+  box-shadow: 0px 3px 6px #00000066;
+}
+.btnGoLive {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.not-event:disabled {
+  background: #00000066 !important;
+}
+.btnGoEnrollment {
+  background: #26c485 !important;
+  transition: ease-in 0.2s !important;
+}
+.btnGoEnrollment:hover {
+  background: #00BE8B !important;
+}

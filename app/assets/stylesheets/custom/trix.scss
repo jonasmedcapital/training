@@ -1,0 +1,19 @@
+trix-toolbar {
+  font-size: 65% !important;
+  margin-top: 0.5rem !important;
+}
+
+.trix-med {
+  font-size: 65% !important;
+  border: none !important;
+  border-bottom: 1px solid #50514F !important;
+  border-radius: 0px !important;
+}
+
+.trix-med:focus {
+  border-bottom: 2px solid #50514F !important;
+}
+
+.trix-med:hover {
+  border-bottom: 2px solid #50514F !important;
+}

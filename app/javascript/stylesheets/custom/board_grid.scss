@@ -1,0 +1,66 @@
+
+.grid-board-task {
+  display: grid;
+  margin: 0 auto;
+  gap: 0.4rem;
+  height: 1200px;
+}
+
+.grid-template-columns-board-task {
+	grid-template-columns: repeat(4, 20rem);
+}
+
+.board-task-list {
+  padding: 0.75rem;
+  background-color: #fbfcff !important;
+	border: 2px solid #EFEFEF;
+	text-align: center;
+  font-size: 0.6rem;
+  overflow: scroll !important;
+}
+
+.calendar-task-list {
+  padding: 0.75rem;
+  background-color: #fbfcff !important;
+	border: 2px solid #EFEFEF;
+	text-align: center;
+  font-size: 0.6rem;
+  height: 500px;
+  overflow: scroll !important;
+}
+
+.board-task-list-title {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.grid-board-task-filter {
+  display: grid;
+  margin: 0 auto;
+  gap: 0.4rem;
+  position: relative !important;
+  // height: 500px;
+}
+
+.board-task-filter-date {
+  width: 4.9rem;
+}
+
+.board-task-filter {
+  //margin: 0.4rem;
+  // padding-right: 0.75rem;
+  // padding-left: 0.75rem;
+	// background: #EFEFEF;
+	text-align: center;
+  font-size: 0.7rem;
+  line-height: 1.5px !important;
+}
+
+.grid-template-columns-board-task-filter {
+  // grid-template-columns: repeat(8, 9.8rem);
+  grid-template-columns: 9.8rem 9.8rem 9.8rem 9.8rem 9.5rem 4.8rem 4.8rem;
+}
+
+.grid-template-columns-board-task-filter-date {
+	grid-template-columns: repeat(2, 4.9rem);
+}

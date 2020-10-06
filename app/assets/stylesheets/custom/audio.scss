@@ -1,0 +1,28 @@
+.play-btn {
+  cursor: pointer !important;
+  padding: 0px !important;
+  box-shadow: none !important;
+  background: none !important;
+}
+
+.pause-btn {
+  cursor: pointer !important;
+  padding: 0px !important;
+  box-shadow: none !important;
+  background: none !important;
+}
+
+progress[value] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #fbfcff;
+  color: #053B5E;
+  height: 5px;
+}
+
+
+progress[value]::-webkit-progress-bar {
+  background-color: #fbfcff;
+  border-radius: 2px;
+  color: #053B5E;
+}

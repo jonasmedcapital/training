@@ -1,0 +1,27 @@
+//*= require trix
+
+@import "material";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+
+@import "custom";
+
+
+$primary-color: #086bac !default;
+
+body {
+  // font-family: "Lato", "Open Sans", Helvetica, Arial, sans-serif !important;
+  color: #50514F !important;
+  font-weight: normal;
+  font-size: 0.85rem !important;
+  background-color: #fbfcff !important;
+}
+
+.body-mobile {
+  font-family:  "Lato", "Open Sans", Helvetica, Arial, sans-serif !important;
+  color: #fbfcff !important;
+  font-weight: normal;
+  font-size: 0.75rem !important;
+  background-color: #086bac !important;
+}

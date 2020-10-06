@@ -1,0 +1,18 @@
+<div class="medcapital_01n">
+  <div class="medcapital_02p">
+    <div class="medcapital_03q">
+      <div class="medcapital_04s">
+        <div data-controller="app--shared--messages"></div>
+        <div data-controller="app--shared--cookies"></div>
+        <div data-controller="app--helpers--numbers"></div>
+        <div data-controller="app--helpers--strings"></div>
+        <div data-controller="app--helpers--time"></div>
+        <div data-controller="app--helpers--forms"></div>
+        <div data-controller="app--helpers--elements"></div>
+        <% if current_user %>
+        <div data-controller="app--visits--users" data-current-user-id="<%= current_user.id %>"></div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

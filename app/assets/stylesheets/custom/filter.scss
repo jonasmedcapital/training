@@ -1,0 +1,51 @@
+// .filter-list {
+//   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.14), 0 1px 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.2) !important;
+//   background-color: rgba(80, 81, 79, 0.9) !important;
+//   position: relative;
+//   min-width: 30% !important;
+//   overflow: auto !important;
+//   z-index: 1;
+// }
+
+ul.ul-filter {
+  list-style-type: none !important;
+  padding-left: 0rem !important;
+  margin-bottom: 0.5rem !important;
+  // margin-top: 0.5rem !important;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.14), 0 1px 1px 1px rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.2) !important;
+  background-color: rgba(80, 81, 79, 0.9) !important;
+  position: absolute !important;
+  min-width: 30% !important;
+  overflow: auto !important;
+  z-index: 1;
+  // background-color: rgba(80, 81, 79, 0.9) !important;
+}
+
+li.li-filter.li-filtered {
+  background-color: rgba(251, 252, 255, 0.25) !important;
+}
+
+li.li-filter {
+  padding-left: 1rem !important;
+  padding-right: 0 !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  font-size: 0.65rem !important;
+}
+
+li.li-filter-placeholder {
+  padding-left: 1rem !important;
+  padding-right: 0 !important;
+  cursor: not-allowed !important;
+  white-space: nowrap !important;
+}
+
+
+
+li.li-filter:hover {
+  background-color: rgba(251, 252, 255, 0.25) !important;
+}
+
+.filter-row {
+  
+}

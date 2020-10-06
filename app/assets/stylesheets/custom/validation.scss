@@ -1,0 +1,39 @@
+.invalid-field {
+  border-bottom-color: #F25F5C !important;
+  box-shadow: inset 0 -2px 0 -1px #F25F5C !important;
+}
+
+.invalid-field:focus {
+  border-bottom-color: #F25F5C !important;
+  box-shadow: inset 0 -2px 0 -1px #F25F5C !important;
+}
+
+.invalid-field:hover {
+  border-bottom-color: #F25F5C !important;
+  box-shadow: inset 0 -2px 0 -1px #F25F5C !important;
+}
+
+.invalid-warning {
+  color: #F25F5C !important;
+  background-color: #fbfcff !important;
+  display: block !important;
+  z-index: 10 !important;
+  font-size: 0.5rem !important;
+}
+
+.invalid-warning-input {
+  color: #F25F5C !important;
+  background-color: #fbfcff !important;
+  z-index: 10 !important;
+  font-size: 0.5rem !important;
+}
+
+.valid-field {
+  border-bottom-color: #26C485 !important;
+  box-shadow: inset 0 -2px 0 -1px #26C485 !important;
+}
+
+.valid-field:focus {
+  border-bottom-color: #26C485 !important;
+  box-shadow: inset 0 -2px 0 -1px #26C485 !important;
+}

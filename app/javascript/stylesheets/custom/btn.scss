@@ -1,0 +1,190 @@
+.btn-table {
+  min-width: 1.5rem;
+}
+
+.btn-p0 {
+  padding: 0px !important;
+  min-width: auto !important;
+}
+
+.btn-primary {
+  background-color: #086bac !important;
+  color: #fbfcff !important;
+}
+
+.btn-disabled {
+  background-color: #50514F !important;
+  color: #fbfcff !important;
+}
+
+.btn-secondary {
+  background-color: #fbfcff !important;
+  color: #086bac !important;
+}
+
+.btn-danger {
+  background-color: #F25F5C !important;
+  color: #fbfcff !important;
+}
+
+.btn-success {
+  background-color: #26C485 !important;
+  color: #fbfcff !important;
+}
+
+.btn-warning {
+  background-color: #FFD784 !important;
+  color: #fbfcff !important;
+}
+
+.btn-flat-primary {
+  background-color: transparent !important;
+  color: #fbfcff !important;
+}
+.btn-flat-secondary {
+  background-color: transparent !important;
+  color: #053B5E !important;
+}
+.btn-flat-danger {
+  background-color: transparent !important;
+  color: #F25F5C !important;
+  font-weight: 800 !important;
+}
+.btn-flat-success {
+  background-color: transparent !important;
+  color: #26C485 !important;
+  font-weight: 800 !important;
+}
+.btn-flat-warning {
+  background-color: transparent !important;
+  color: #FFD784 !important;
+  font-weight: 800 !important;
+}
+
+.btn-float-primary {
+  background-color: #086bac !important;
+  color: #fbfcff !important;
+}
+.btn-float-secondary {
+  background-color: #fbfcff !important;
+  color: #086bac !important;
+}
+.btn-float-danger {
+  background-color: #F25F5C !important;
+  color: #fbfcff !important;
+}
+.btn-float-success {
+  background-color: #26C485 !important;
+  color: #fbfcff !important;
+}
+.btn-float-warning {
+  background-color: #FFD784 !important;
+  color: #fbfcff !important;
+}
+
+.btn-link-primary {
+  color: #50514F !important;
+}
+
+.btn-link-secondary {
+  color: #086bac !important;
+}
+
+.btn-link-danger {
+  color: #F25F5C !important;
+}
+
+button[disabled] {
+  background-color: #50514F !important;
+  color: #fbfcff !important;
+}
+
+button[disabled].form-control {
+  background-color: transparent !important;
+  color: #fbfcff !important;
+}
+
+
+.btn-cards {
+    width: 200px;
+    color:#FFFFFF;
+    background-color: #1C7CD5;
+}
+
+.btn-outline-primary {
+  background-color: #fbfcff !important;
+  color: #086bac !important;
+}
+
+.btn-success-site.btn:hover {
+  background-color:#26C485; 
+  color:#fbfcff;font-size: 14px;  
+  font-weight: bold;
+}
+
+.btn-success-site.btn:active {
+  background-color:#26C485; 
+  color:#fbfcff;font-size: 14px;  
+  font-weight: bold;
+}
+
+
+.btn-primary-site {
+background-color:#26C485; 
+color:#fbfcff;font-size: 14px;
+font-size: 15px; 
+font-weight: 600;
+}
+
+.btn-primary-mobile {
+background-color:#26C485; 
+color:#fbfcff;font-size: 12px;
+font-size: 16px; 
+font-weight: 600;
+}
+
+a:active, a:focus, a:hover {
+  color: #086bac !important;
+  text-decoration: none !important;
+}
+
+.btn-primary.a:hover {
+  color: #fbfcff !important;
+  text-decoration: none !important;
+}
+
+a:active {
+  color:#086bac !important;
+}
+
+a.a-dark {
+  color:#fbfcff !important;
+}
+
+a.a-white {
+  color:#50514F !important;
+}
+
+a.a-spotlight {
+  color:#26C485 !important;
+}
+
+.btn-wrap {
+  white-space: pre-line !important;
+}
+
+.btn-anchor {
+  text-decoration: none !important;
+  font-size: 1.2rem !important;
+  white-space: pre-line !important;
+  font-weight: bold !important;
+}
+
+.btn-anchor-site {
+  text-decoration: none !important;
+  font-size: 1.2rem !important;
+}
+
+.btn-pointer {
+ cursor: pointer !important; 
+}

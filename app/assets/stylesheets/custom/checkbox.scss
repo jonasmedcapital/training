@@ -1,0 +1,15 @@
+.custom-control-input:checked ~ .custom-control-label::after {
+  color: #086bac !important;
+}
+
+.custom-control-input {
+  z-index: 0 !important;
+}
+
+.custom-success.custom-control-input:checked ~ .custom-control-label::after {
+  color: #26C485 !important;
+}
+
+.custom-danger.custom-control-input:checked ~ .custom-control-label::after {
+  color: #F25F5C !important;
+}

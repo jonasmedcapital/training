@@ -1,0 +1,28 @@
+<header class="navbar navbar-dark navbar-full bg-primary doc-navbar-default sticky-top" data-controller="app--navigation--desktop--navbar" data-target="app--navigation--desktop--navbar.main">
+  <button data-target="#myNavdrawer" data-toggle="navdrawer" type="button" class="navbar-toggler">
+    <span class="navbar-toggler-icon" style="color:#fbfcff;"></span>
+  </button>
+  <span class="s-title-FBFCFF s-title-1p5rem mr-auto">MedCapital</span>
+</header>
+
+<div class="progress progress-navbar sticky-top">
+  <div class="progress-bar progress-bar-indeterminate progress-bar-navbar" role="progressbar"></div>
+</div>
+
+
+<div aria-hidden="true" class="navdrawer navdrawer-default" id="myNavdrawer" tabindex="-1" data-controller="app--navigation--desktop--sidebar">
+  <%= content_tag :div, "", id: "currentUserDataContainer", data: { current_user: current_user } %>
+  <%= content_tag :div, "", id: "currentUserPermisisonContainer" %>
+  <%= content_tag :div, "", id: "currentUserSidebarPermisisonContainer" %>
+  <div class="navdrawer-content" style="width:80px;" data-target="app--navigation--desktop--sidebar.navdrawer"></div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    currentUser = <%= current_user.to_json.html_safe %>
+    currentUserId = "<%= current_user.id %>"
+    currentUserSlug = "<%= current_user.slug %>"
+    currentUserName = "<%= current_user.name %>"
+
+  });
+</script>

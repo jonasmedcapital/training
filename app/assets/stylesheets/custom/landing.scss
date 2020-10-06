@@ -1,0 +1,131 @@
+.doubtFont {
+  color: #086bac;
+  font-family: poppins;
+}
+.btn-link {
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    color: #086bac;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: none;
+}
+
+.btn-link:active, .btn-link:focus, .btn-link:hover {
+    color: #053B5E;
+    text-decoration: none;
+  }
+
+.imgback {
+   background: url(https://medcapital-site-main.s3-sa-east-1.amazonaws.com/medbackground.png);
+   height: 100% !important;
+}
+
+.frame-one {
+  background: url(https://medcapital-site-main.s3-sa-east-1.amazonaws.com/medbackground.png);
+  height: 100% !important;
+}
+
+.frame-two {
+  background: #fbfcff !important;
+  height: 75% !important;
+}
+
+.frame-three {
+  background: #053B5E !important;
+  height: 25% !important;
+}
+
+.frame-four {
+  background: #fbfcff !important;
+  height: 75% !important;
+}
+
+.frame-five {
+  background: #053B5E !important;
+  height: 10% !important;
+}
+
+.frame-schedule {
+  background: #fbfcff !important;
+  height: 100% !important;
+}
+
+.title-one {
+  font-family: 'Poppins', sans-serif !important;
+  color: #fbfcff !important;
+  font-weight: bold !important;
+  text-align: center !important;
+  font-size: 2rem !important;
+}
+
+.subtitle-one {
+  font-family: 'Poppins', sans-serif !important;
+  color: #fbfcff !important;
+  font-weight: normal !important;
+  text-align: center !important;
+  font-size: 1.2rem !important;
+}
+
+.title-two {
+  font-family: 'Poppins', sans-serif !important;
+  color: #053B5E !important;
+  font-weight: bold !important;
+  font-size: 2rem !important;
+}
+
+.subtitle-two {
+  font-family: 'Poppins', sans-serif !important;
+  color: #053B5E !important;
+  font-weight: normal !important;
+  font-size: 1.2rem !important;
+}
+
+.title-schedule {
+  font-family: 'Poppins', sans-serif !important;
+  color: #053B5E !important;
+  font-weight: bold !important;
+  text-align: center !important;
+  font-size: 1.5rem !important;
+}
+
+.subtitle-schedule {
+  font-family: 'Poppins', sans-serif !important;
+  color: #053B5E !important;
+  font-weight: normal !important;
+  text-align: center !important;
+  font-size: 1.2rem !important;
+}
+
+.call-to-action {
+  font-family: 'Poppins', sans-serif !important;
+  color: #fbfcff !important;
+  font-weight: bold !important;
+  text-align: center !important;
+}
+
+.question {
+  font-family: 'Poppins', sans-serif !important;
+  color: #053B5E !important;
+  font-weight: bold !important;
+  text-align: left !important;
+  font-size: 1.2rem !important;
+}
+
+.answer {
+  font-family: 'Poppins', sans-serif !important;
+  color: #50514F !important;
+  font-weight: normal !important;
+  text-align: left !important;
+  font-size: 1rem !important;
+}
+
+.schedule-selected {
+  background-color: #086bac !important;
+  color: #fbfcff !important;
+}
+
+.schedule-title{
+  font-size: 1rem !important;
+}

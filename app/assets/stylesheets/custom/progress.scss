@@ -1,0 +1,29 @@
+.progress-navbar {
+//   z-index: 0; /* Add a z-index if needed */
+  visibility: hidden;
+}
+
+.progress-navbar.show {
+  visibility: visible; /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar. 
+  However, delay the fade out process for 2.5 seconds */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 1000s;
+  animation: fadein 0.5s, fadeout 0.5s 1000s;
+}
+
+.progress-bar-indeterminate {
+  border-bottom-color: #D2E4EF !important;
+}
+
+.progress-bar-indeterminate::after, .progress-bar-indeterminate::before {
+  background-color: #086bac !important;
+}
+
+
+.progress-bar-navbar {
+  border-bottom: 0.25rem solid #086bac !important;
+}
+
+.progress-bar-audio {
+  border-bottom: 0.25rem solid #FBFCFF !important;
+}

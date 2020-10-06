@@ -1,0 +1,51 @@
+.justify-ebook {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.h-inherit {
+  height: inherit !important;
+}
+
+.frame-80 {
+  height: 80% !important;
+}
+.frame-120 {
+  height: 120% !important;
+}
+
+.dark-title-lp-ebook {
+  font-size: 32px !important;
+  font-weight: bold !important;
+  font-family: poppins !important;
+  color: #FBFDFF !important;
+}
+.dark-stitle-lp-ebook {
+  font-size: 16px !important;
+  font-family: poppins !important;
+  color: #FBFDFF !important;
+}
+.title-lp-ebook {
+  font-size: 40px !important;
+  font-weight: bold !important;
+  font-family: poppins !important;
+  color: #00375C !important;
+}
+.stitle-lp-ebook {
+  font-size: 20px !important;
+  font-family: poppins !important;
+}
+.foco-text-ebook {
+  color: #00BF88 !important;
+}
+.color-btn-ebook {
+  background-color: #00BF88 !important;
+}
+.background-ebook {
+  background: url(https://medcapital-site-main.s3-sa-east-1.amazonaws.com/medbackground.png);
+  height: 120% !important;
+}
+.max-600 {
+  max-width: 600px !important;
+}

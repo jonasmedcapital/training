@@ -1,0 +1,196 @@
+input {
+  position: relative !important;
+  display: inline !important;
+  // font-size: 1.5rem !important;
+  box-sizing: border-box !important;
+}
+.form-blog {
+  background: #fbfcff !important;
+  width: 70% !important;
+  height: 3rem !important;
+  border: none !important;
+  outline: none !important;
+  padding: 0 1rem !important;
+  border-radius: 2rem 0 0 2rem !important;
+  box-shadow: #34343438 0 3px 6px;
+}
+
+.form-control.form-blog:focus{
+  box-shadow: #34343438 0 3px 6px !important;
+}
+.form-control.form-blog:hover{
+  box-shadow: #34343438 0 3px 6px !important;
+}
+.blog-btn {
+  position: relative!important;
+  border-radius: 0 2rem 2rem 0 !important;
+  left: -1rem !important;
+  height: 3rem !important;
+  border: none !important;
+  outline: none !important;
+  cursor: pointer !important;
+  background: #086bac !important;
+  color: #fbfcff !important;
+}
+.blog-title {
+  font-size: 1rem !important;
+  font-weight: bold !important;
+}
+.blog-chip {
+  font-weight: bold !important;
+  cursor: pointer !important;
+  background: #fbfcff !important;
+  box-shadow: #34343438 0 3px 6px;
+  transition: ease-in 0.4s;
+}
+.btn-card-blog{
+  background: #053B5E !important;
+  color: #fbfcff !important;
+}
+.card-img-blog {
+  width: 100% !important;
+  height: 12rem !important;
+}
+.class-blog {
+  margin-top: -1.5rem !important;
+  font-size: 0.8rem !important;
+  font-weight: bold !important;
+  background: #4caf50 !important;
+  color: #fbfcff !important;
+}
+.s-title-2rem {
+  font-size: 2rem;
+}
+
+.s-subtitle-blog-footer {
+  font-family:'Poppins', sans-serif !important;
+  color: #086bac !important;
+  font-weight: 500 !important;
+  text-align: left !important;
+  font-size: 0.65rem !important;
+}
+.h-subtitle-foote-footer {
+  font-family:'Poppins', sans-serif !important;
+  color: #086bac !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  font-size: 0.65rem !important;
+
+}
+.icon-footer {
+  font-size: 1rem!important;
+}
+
+.frame-news {
+  background-color: #EFEFEF!important;
+}
+.blog-nav-page {
+  background-color: #fbfcff !important;
+  justify-content: center !important;
+}
+.filter-blog {
+  text-align: end !important;
+  margin-bottom: 2rem !important;
+  margin-top: -4.2rem !important;
+  margin-left: -3rem !important;
+}
+
+.title-podcast {
+  font-size: 2rem !important;
+  font-weight: bold !important;
+}
+.mg-top {
+  margin-top: 2rem !important;
+}
+.mg-bottom{
+  margin-bottom: 1rem !important;
+}
+.pub-top {
+  margin-top: -1rem !important;
+}
+.video-center {
+  margin: 0 auto !important;
+}    
+.s-title-podcast {
+  font-size: 1.4rem !important;
+  font-weight: bold !important;
+  color: #053B5E !important;
+}
+
+.article {
+  font-size: 1.2rem !important;
+  line-height: 2.2rem !important;
+  color: #50514F !important;
+
+}
+.card-pub {
+  display: inline-block !important; 
+  margin: 0.5rem !important;
+}
+.nav-blog {
+  font-size: 1rem !important;
+}
+.back-blog {
+  margin-top: 3rem !important;
+  margin-bottom: 3rem !important;
+}
+.a-back-blog {
+  font-weight: bold !important;
+  font-family: poppins !important;
+  font-size: 1rem !important;
+  color: #6F706F !important;
+}
+@media (max-width:1300px) {
+
+.card-lateral {
+  display: none !important;
+}  
+.nav-blog {
+  display: none !important;
+}
+
+}
+@media (min-width:1300px) {
+
+  .back-blog {
+   display: none !important;
+  }
+}
+
+.blog-line{
+  width: 100% !important;
+  // border: 0.5px solid #50514F !important;
+  border: 0.5px solid rgba(80, 81, 79, 0.5) !important;
+}
+
+.post-link {
+  cursor: pointer !important;
+}
+
+.nav-tabs-blog li {
+  margin-left: 2rem;
+}
+.nav-tabs span {
+  margin-right: 0.5rem;
+}
+#searchResults h5 {
+  font-weight: bold;
+  font-size: 1rem;
+}
+#searchResults a {
+  color: #212121 !important;
+  transition: ease-in 0.2s;
+}
+#searchResults a:hover {
+  color: #086bac !important;
+}
+.text-category {
+  color: #212121 !important;
+  font-weight: bold;
+}
+.results-cards {
+  // max-width: 800px;
+  // max-height: 120px; 
+  margin-bottom: 2rem;
+  cursor: pointer;
+}

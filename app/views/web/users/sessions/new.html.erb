@@ -1,0 +1,36 @@
+<div class="row align-items-center justify-content-center" style="height:100%;width:100%;">
+  <div class="col-sm-5 d-flex align-items-center justify-content-center" style=" position: initial; height:100%;background-color:#086bac;">
+    <div class="row">
+      <div class="col-sm-12 text-center py-4 my-4">
+      </div>
+      <div class="col-sm-12 text-center">
+        <h2 class="s-title-2rem s-title-FBFCFF">Facilitando sua vida financeira de ponta a ponta</h2>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-7 d-flex justify-content-center">    
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3 text-left py-3 my-3">
+        <p class="s-title-2rem mb-0">Faça seu Login</p>
+      </div>
+      <div class="col-sm-6 offset-sm-3 text-center" data-controller="users--auth--sessions--new app--helpers--numbers">
+        <div id="formLogin">
+          <div class="form-group form-valid-group form-login" style="margin-bottom:2rem;" data-valid="false" data-target="users--auth--sessions--new.validGroup">
+            <div class="floating-label">
+              <label for="user_cpf">Digite seu CPF</label>
+              <input aria-describedby="cpfLoginHelp" class="form-control s-title-1p5rem" id="user_cpf"  type="text" data-target="users--auth--sessions--new.userCpf" data-action="keypress->app--helpers--numbers#changeNumberToCpf blur->app--helpers--numbers#changeNumberToCpf blur->users--auth--sessions--new#validateCpf keyup->users--auth--sessions--new#validateCpf focus->users--auth--sessions--new#cleanValidations">
+            </div>
+          </div>
+          <div class="form-group form-valid-group" style="margin-bottom:2rem;" data-valid="false" data-target="users--auth--sessions--new.validGroup">
+            <div class="floating-label">
+              <label for="user_password">Digite sua senha</label>
+              <input aria-describedby="passwordLoginHelp" class="form-control s-title-1p5rem" id="user_password"  type="password" data-target="users--auth--sessions--new.userPassword" data-action="keyup->users--auth--sessions--new#validatePassword blur->users--auth--sessions--new#validatePassword keyup->users--auth--sessions--new#signIn">
+            </div>
+          </div>
+          <p class="text-muted text-right"><small><a class="a-white" href="/esqueci-minha-senha">Esqueci Minha Senha</a></small></p>
+          <button type="submit" class="btn btn-primary btn-sm my-3" disabled id="btnSignIn" style="width:100%;" data-target="users--auth--sessions--new.btnSignIn" data-action="click->users--auth--sessions--new#signIn">Entrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

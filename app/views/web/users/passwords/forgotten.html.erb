@@ -1,0 +1,31 @@
+<div class="row align-items-center justify-content-center" style="height:100%;width:100%;">
+  <div class="col-sm-5 d-flex align-items-center justify-content-center" style=" position: initial; height:100%;background-color:#086bac;">
+    <div class="row">
+      <div class="col-sm-12 text-center py-4 my-4">
+        <img class="img-fluid" src="https://medcapital-site-main.s3-sa-east-1.amazonaws.com/logoMedcapital-invert.png" style="width: 30rem;">
+      </div>
+      <div class="col-sm-12 text-center">
+        <h2 class="s-title-2rem s-title-FBFCFF">Facilitando sua vida financeira de ponta a ponta</h2>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-7 d-flex justify-content-center" data-controller="users--auth--forgotten app--helpers--numbers">    
+    <div class="row">
+      <div class="col-sm-9 offset-sm-3 text-left py-3 my-3">
+        <p class="s-title-2rem mb-0">Recupere a sua Senha</p>
+        <p class="text-muted"><small>Se esqueceu a sua senha, não tem problemas, nos informe o seu CPF:</small></p>
+      </div>
+      <div class="col-sm-6 offset-sm-3 text-center">
+        <div id="formLogin">
+          <div class="form-group form-valid-group form-login" style="margin-bottom:2rem;" data-valid="false" data-target="users--auth--forgotten.validGroup">
+            <div class="floating-label">
+              <label for="userCpf">Digite seu CPF</label>
+              <input tabindex="1" aria-describedby="cpfLoginHelp" class="form-control s-title-1p5rem" id="userCpf" data-target="users--auth--forgotten.userCpf" data-action="keypress->app--helpers--numbers#changeNumberToCpf blur->app--helpers--numbers#changeNumberToCpf blur->users--auth--forgotten#validateCpf keyup->users--auth--forgotten#validateCpf focus->users--auth--forgotten#cleanValidations keyup->users--auth--forgotten#sendNewPassword"  type="text">
+            </div>             
+          </div>
+          <p class="text-muted text-right"><small><a class="a-white" href="/entrar">Fazer Login</a></small></p>      
+          <button tabindex="2" type="submit" class="btn btn-primary btn-sm my-3" disabled id="btnSignIn" data-target="users--auth--forgotten.btnSignIn" data-action="click->users--auth--forgotten#sendNewPassword" style="width:100%;">Recuperar Minha Senha</button>
+        </div>
+      </div>
+    </div>
+</div>
