@@ -65,7 +65,7 @@ class Trainings::Entities::Update
   def message
     # return message = "A ação não é permitida" unless @can_current_user_update_training
     if @valid
-      message = "Curso atualizado com sucesso!"
+      message = "Treinamento atualizado com sucesso!"
       return message
     else
       message = "Tivemos seguinte(s) problema(s):"

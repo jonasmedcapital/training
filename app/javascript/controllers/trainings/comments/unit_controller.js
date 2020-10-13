@@ -87,12 +87,13 @@ export default class extends Controller {
         } else {
           this.saveBtnTarget.disabled = false
         }
-        processingSnackbar(response.type, response.message, device)
+        processingSnackbar(response.type, response.message) //, device)
       })
   }
 
   replyPartial(comment) {
-    if (this.application.training_comments && this.application.training_comments.can_delete && this.application.current_user) {
+    // if (this.application.training_comments && this.application.training_comments.can_delete && this.application.current_user) {
+    if (this.application.training_comments && this.application.current_user) {
       var deleteBtnHtml = `<td class="p-1 table-10 pointer text-center align-middle"><button type="button" class="btn btn-sm btn-table p-0" data-toggle="tooltip" data-placement="top" title data-original-title="Apagar Comentário"><span class="material-icons md-sm md-dark" data-action="click->trainings--comments--unit#deleteReply">delete</span></button></td>`
     } else {
       var deleteBtnHtml = ``
@@ -135,13 +136,15 @@ export default class extends Controller {
   }
 
   commentPartial(comment) {
-    if (this.application.training_comments && this.application.training_comments.can_delete && this.application.current_user) {
+    // if (this.application.training_comments && this.application.training_comments.can_delete && this.application.current_user) {
+    if (true) {
       var deleteBtnHtml = `<td class="p-1 table-10 pointer text-center align-middle"><button type="button" class="btn btn-sm btn-table p-0" data-toggle="tooltip" data-placement="top" title data-original-title="Apagar Comentário"><span class="material-icons md-sm md-dark" data-action="click->trainings--comments--unit#deleteComment">delete</span></button></td>`
     } else {
       var deleteBtnHtml = ``
     }
 
-    if (this.application.training_comments && this.application.training_comments.can_update && this.application.current_user && comment.reply == false) {
+    // if (this.application.training_comments && this.application.training_comments.can_update && this.application.current_user && comment.reply == false) {
+    if (true) {
       var replyBtnHtml = `<td style="border:none;height: 4rem;" class="p-1 table-10 pointer text-center align-middle"><button type="button" class="btn btn-sm btn-table p-0" data-toggle="tooltip" data-placement="top" title data-original-title="Responder"><span class="material-icons md-sm md-dark" data-action="click->trainings--comments--unit#replyComment" data-target="trainings--comments--unit.replyBtn">reply</span></button></td>`
     } else {
       var replyBtnHtml = `<td style="border:none;height: 4rem;" class="p-1 table-10 pointer text-center align-middle"><button type="button" class="btn btn-sm btn-table p-0" data-toggle="tooltip" data-placement="top" title data-original-title="Responder"><span class="material-icons md-sm md-dark d-none" data-action="click->trainings--comments--unit#replyComment" data-target="trainings--comments--unit.replyBtn">reply</span></button></td>`

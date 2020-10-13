@@ -5,7 +5,7 @@ class Training::Session < ApplicationRecord
   # Storage
   
   # Relations
-  belongs_to :course, class_name: "Training::Entity", foreign_key: "course_id"
+  belongs_to :training, class_name: "Training::Entity", foreign_key: "course_id"
   has_many :lessons, class_name: "Training::Lesson", foreign_key: "session_id"
   
   # Validations

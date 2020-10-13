@@ -4,7 +4,7 @@ class Trainings::Entities::SaveUpload
   attr_accessor :status, :type, :message
 
   def initialize(params)
-    @course_id = params["course_id"].to_i
+    @training_id = params["course_id"].to_i
     @field = params["field"]
     @file = params["file"]
     @file_name = params["file_name"]
@@ -26,7 +26,7 @@ class Trainings::Entities::SaveUpload
   end
 
   def training
-    @training ||= ::Trainings::EntityRepository.find_by_id(@course_id)
+    @training ||= ::Trainings::EntityRepository.find_by_id(@training_id)
   end
 
   # def current_user

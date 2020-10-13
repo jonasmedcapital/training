@@ -12,7 +12,7 @@ class Training::Entity < ApplicationRecord
   
   # Relations
   has_many :sessions, class_name: "Training::Session", foreign_key: "course_id"
-  has_many :course_speakers, class_name: "Training::Speaker", foreign_key: "course_id"
+  has_many :training_speakers, class_name: "Training::Speaker", foreign_key: "course_id"
   has_many :speakers, through: :course_speakers, source: "author"
   has_many :metrics, class_name: "Training::Metric", foreign_key: "course_id"
   has_many :comments, class_name: "Training::Comment", foreign_key: "course_id"
@@ -26,9 +26,9 @@ class Training::Entity < ApplicationRecord
   validates :meta_keywords, presence: { message: "Por favor, insira a Meta Keywords. " }, on: [:update]
   validates :title, presence: { message: "Por favor, insira o Título. " }
   validates :description, presence: { message: "Por favor, insira o Descrição. " }
-  validates :path, presence: { message: "Por favor, insira a URL do Curso. " },
-                   uniqueness: { case_sensitive: false, message: "A URL do Curso já existe na base. " },
-                   format: {with: VALID_PATH_REGEX, message: "A URL do Curso é inválida. "}
+  validates :path, presence: { message: "Por favor, insira a URL do Treinamento. " },
+                   uniqueness: { case_sensitive: false, message: "A URL do Treinamento já existe na base. " },
+                   format: {with: VALID_PATH_REGEX, message: "A URL do Treinamento é inválida. "}
 
   #Enums
   enum sharing: { public: 0,
@@ -41,7 +41,10 @@ class Training::Entity < ApplicationRecord
                   taxes: 2,
                   billing: 3,
                   insurance: 4,
-                  education: 5}, _prefix: :_
+                  education: 5,
+                  development: 6,
+                  operation: 7,
+                  financial: 8}, _prefix: :_
 
 
   enum format: { paid: 0,

@@ -59,7 +59,7 @@ class Trainings::Entities::Create
   def message
     # return message = "A ação não é permitida" unless @can_current_user_create_training
     if @valid
-      message = "Curso criado com sucesso!"
+      message = "Treinamento criado com sucesso!"
       return message
     else
       message = "Tivemos seguinte(s) problema(s):"

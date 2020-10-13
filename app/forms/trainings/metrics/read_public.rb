@@ -4,50 +4,42 @@ class Trainings::Metrics::ReadPublic
   attr_accessor :status, :type, :message
 
   def initialize(params)
-    @metric_params = params.require(:metric).permit(:id, :course_id, :user_id, :visitor_token)
+    @metric_params = params.require(:metric).permit(:id, :course_id, :user_id)
 
     # permitted_id = permitted_query(@metric_params[:id])
     # permitted_course_id = permitted_query(@metric_params[:course_id])
     # permitted_user_id = permitted_query(@metric_params[:user_id])
-    # permitted_visitor_token = permitted_query(@metric_params[:visitor_token])
 
-    # @valid_query = permitted_id && permitted_course_id && permitted_user_id && permitted_visitor_token
+    # @valid_query = permitted_id && permitted_course_id && permitted_user_id
 
     # return false unless @valid_query
-    
     @user = user
-    @visitor = visitor
     @metric = metric
-    
-    @valid = @metric.valid?
+    # @valid = @metric.valid?
   end
 
   def metric
-    @metric ||= ::Trainings::MetricRepository.find_or_initialize(@metric_params, @user, @visitor)
+    @metric ||= ::Trainings::MetricRepository.find_or_initialize(@metric_params, @user)
   end
 
-  def course
-    @course ||= ::Trainings::EntityRepository.find_by_id(@metric_params[:course_id])
+  def training
+    @training ||= ::Trainings::EntityRepository.find_by_id(@metric_params[:course_id])
   end
 
   def user
-    @user ||= ::Users::UserRepository.new.find_by_id(@metric_params[:user_id])
-  end
-
-  def visitor
-    @visitor ||= ::Leads::VisitorRepository.find_by_token(@metric_params[:visitor_token])
+    @user ||= ::Users::UserRepository.find_by_id(@metric_params[:user_id])
   end
   
   def save
     # return false unless @valid_query
     ActiveRecord::Base.transaction do
-      if @valid
-        @metric.save
+      # if @valid
+        @metric.save!
         true
-      else
-        false
-        raise ActiveRecord::Rollback
-      end
+      # else
+      #   false
+      #   raise ActiveRecord::Rollback
+      # end
     end
   end
   

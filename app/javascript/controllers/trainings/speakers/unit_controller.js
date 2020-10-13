@@ -12,7 +12,7 @@ export default class extends Controller {
   }
 
   speakerPartial(element) {
-    var html = `<div class="card my-3" data-id="${element.id}" data-controller="marketing--courses--speakers--unit">
+    var html = `<div class="card my-3" data-id="${element.id}" data-controller="trainings--speakers--unit">
                   <div class="card-body py-1">
                     <table class="table table-sm" style="font-size:80%;">
                       <tbody>
@@ -20,7 +20,7 @@ export default class extends Controller {
                           <td class="table-80 align-middle pointer px-0" style="height:inherit;">
                             <span class="text-bold">${element.speaker_name}</span>
                           </td>
-                          <td class="p-1 table-80 align-middle pointer"><button type="button" class="btn btn-sm btn-table p-0" data-toggle="tooltip" data-placement="top" title data-original-title="Remover Speaker"><span class="material-icons md-sm md-dark" data-action="click->marketing--courses--speakers--unit#deleteSpeaker">delete</span></button></td>
+                          <td class="p-1 table-80 align-middle pointer"><button type="button" class="btn btn-sm btn-table p-0" data-toggle="tooltip" data-placement="top" title data-original-title="Remover Speaker"><span class="material-icons md-sm md-dark" data-action="click->trainings--speakers--unit#deleteSpeaker">delete</span></button></td>
                         </tr>
                       </tbody>
                     </table>
@@ -32,7 +32,7 @@ export default class extends Controller {
 
   requestDelete(data) {
     const token = $('meta[name=csrf-token]').attr('content');
-    const url = "/marketing/courses/speakers/destroy"
+    const url = "/trainings/speakers/destroy"
     const init = { method: "DELETE", credentials: "same-origin", headers: { "X-CSRF-Token": token, 'Content-Type': 'application/json' }, body: JSON.stringify(data) }
     fetch(url, init)
       .then(response => response.json())
@@ -46,10 +46,10 @@ export default class extends Controller {
             }
           })
 
-          this.getControllerByIdentifier("marketing--courses--speakers--index").listSpeakers()
+          this.getControllerByIdentifier("trainings--speakers--index").listSpeakers()
           this.getControllerByIdentifier("app--helpers--elements").tooltip()
         }
-        processingSnackbar(response.type, response.message, device)
+        processingSnackbar(response.type, response.message) //, device)
       })
   }
 

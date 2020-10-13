@@ -1,0 +1,20 @@
+<% provide(:meta_title, @training.meta_title) %>
+<% provide(:meta_description, @training.meta_description) %>
+<% provide(:meta_keywords, @training.meta_keywords) %>
+
+<div data-controller="trainings--entities--public-show">
+  
+  <% if current_user.nil? %>
+    <%= render 'web/pages/site/frame_1' %>
+    <div class="my-3 py-3"></div>
+  <% end %>
+
+  <div data-target="trainings--entities--public-show.mainContent"></div>
+
+
+  <% if current_user.nil? %>
+    <%= render 'web/pages/site/frame_footer' %>
+  <% end %>
+  
+
+</div>

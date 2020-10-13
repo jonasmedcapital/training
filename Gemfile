@@ -59,6 +59,9 @@ gem "serviceworker-rails"
 # A rich text editor for everyday writing
 gem 'trix'
 
+# traffic mkt
+gem 'ahoy_matey'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

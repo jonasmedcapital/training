@@ -20,7 +20,7 @@ export default class extends Controller {
           title: this.titleTarget.value,
           path: this.pathTarget.value,
           description: this.descriptionTarget.value,
-          content: "education",
+          content: this.contentTrainingInputTarget.dataset.content,
           format: "free",
           kind: "training",
           sharing: this.sharingTrainingInputTarget.dataset.sharing,
@@ -62,7 +62,7 @@ export default class extends Controller {
           this.close()
           if (this.getControllerByIdentifier("trainings--entities--index").nameTarget("viewTrainingBody")) {
             this.getControllerByIdentifier("trainings--entities--index").nameTarget("viewTrainingBody").remove()
-            this.getControllerByIdentifier("trainings--entities--index").nameTarget("viewTitle").innerText = "Nenhum Curso Selecionado"
+            this.getControllerByIdentifier("trainings--entities--index").nameTarget("viewTitle").innerText = "Nenhum Treinamento Selecionado"
           }
           if (data.training.id) {
             if (training.active) {
@@ -110,7 +110,7 @@ export default class extends Controller {
                   <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                       <div class="modal-header border-bottom">
-                        <h6 class="modal-title"><strong>Novo Curso</strong></h6><br>
+                        <h6 class="modal-title"><strong>Novo Treinamento</strong></h6><br>
                         <button type="button" class="close" data-dismiss="modal" data-action="click->trainings--entities--modal#close" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
@@ -140,7 +140,7 @@ export default class extends Controller {
                               <div class="input-group input-group-sm">
                                 <div class="floating-label floating-label-sm">
                                   <label for="pathTrainingForm">URL para Training</label>
-                                  <input readonly aria-describedby="pathTrainingFormHelp" class="form-control form-valid-control" id="pathTrainingForm" data-target="trainings--entities--modal.path trainings--entities--modal.input" data-action="blur->trainings--entities--modal#validateField focus->trainings--entities--modal#cleanValidations" placeholder="URL do Curso" type="text" required>
+                                  <input readonly aria-describedby="pathTrainingFormHelp" class="form-control form-valid-control" id="pathTrainingForm" data-target="trainings--entities--modal.path trainings--entities--modal.input" data-action="blur->trainings--entities--modal#validateField focus->trainings--entities--modal#cleanValidations" placeholder="URL do Treinamento" type="text" required>
                                 </div>
                                 <span class="input-group-icon mr-2">/</span>
                               </div>
@@ -158,7 +158,7 @@ export default class extends Controller {
                           </div>
                         </div>
                         <div class="row">
-                          <div class="col-3 pr-1">
+                          <div class="col-4 pr-1">
                             <div class="form-group">
                               <div class="floating-label floating-label-sm">
                                 <label>Conteúdo</label>
@@ -168,38 +168,9 @@ export default class extends Controller {
                                     <input class="form-control form-control-selector dropdown-search-input" type="text" placeholder="Buscar ...">
                                     <ul class="ul-select" data-target="trainings--entities--modal.contentList">
                                       <li data-content="education" class="li-selector dark" >Educação</li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-3">
-                            <div class="form-group">
-                              <div class="floating-label floating-label-sm">
-                                <label>Tipo</label>
-                                <div class="dropdown dropdown-selector dropdown-valid-selector" data-target="trainings--entities--modal.kindTrainingDropdown">
-                                  <button class="dropdown-toggle form-control d-flex" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height:32px;"><span class="mr-auto w-100 selected-item" id="selected" data-target="trainings--entities--modal.kindTrainingInput"></span></button>
-                                  <div class="dropdown-menu dropdown-menu-selector w-100 box-shadow-selector">
-                                    <input class="form-control form-control-selector dropdown-search-input" type="text" placeholder="Buscar ...">
-                                    <ul class="ul-select" data-target="trainings--entities--modal.kindList">
-                                    <li data-kind="training" class="li-selector dark">Treinamento</li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-3">
-                            <div class="form-group">
-                              <div class="floating-label floating-label-sm">
-                                <label>Formato</label>
-                                <div class="dropdown dropdown-selector dropdown-valid-selector" data-target="trainings--entities--modal.formatTrainingDropdown">
-                                  <button class="dropdown-toggle form-control d-flex" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height:32px;"><span class="mr-auto w-100 selected-item" id="selected" data-target="trainings--entities--modal.formatTrainingInput"></span></button>
-                                  <div class="dropdown-menu dropdown-menu-selector w-100 box-shadow-selector">
-                                    <input class="form-control form-control-selector dropdown-search-input" type="text" placeholder="Buscar ...">
-                                    <ul class="ul-select" data-target="trainings--entities--modal.formatList">
-                                      <li data-format="free" class="li-selector dark">Gratuito</li>
+                                      <li data-content="development" class="li-selector dark" >Desenvolvimento</li>
+                                      <li data-content="operation" class="li-selector dark" >Operação</li>
+                                      <li data-content="financial" class="li-selector dark" >Financeiro</li>
                                     </ul>
                                   </div>
                                 </div>
@@ -309,10 +280,6 @@ export default class extends Controller {
     this.notesTarget.value = training.notes
     this.contentTrainingDropdownTarget.value = training.content
     this.contentTrainingInputTarget.innerText = training.content_pretty
-    this.kindTrainingDropdownTarget.value = training.kind
-    this.kindTrainingInputTarget.innerText = training.kind_pretty
-    this.formatTrainingDropdownTarget.value = training.format
-    this.formatTrainingInputTarget.innerText = training.format_pretty
     this.sharingTrainingDropdownTarget.value = training.sharing
     this.sharingTrainingInputTarget.innerText = training.sharing_pretty
 
@@ -379,12 +346,8 @@ export default class extends Controller {
   validateSelectors() {
     if (this.contentTrainingInputTarget.innerText == "") {
       return { valid: false, error: "Conteúdo não pode ficar em branco" }
-    } else if (this.formatTrainingInputTarget.innerText == "") {
-      return { valid: false, error: "Formato não pode ficar em branco" }
     } else if (this.sharingTrainingInputTarget.innerText == "") {
       return { valid: false, error: "Compartilhamento não pode ficar em branco" }
-    } else if (this.kindTrainingInputTarget.innerText == "") {
-      return { valid: false, error: "Tipo não pode ficar em branco" }
     } else {
       return { valid: true }
     }

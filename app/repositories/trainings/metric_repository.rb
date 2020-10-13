@@ -1,11 +1,9 @@
 class Trainings::MetricRepository < Base
 
-  def self.find_or_initialize(attrs, user, visitor)
+  def self.find_or_initialize(attrs, user)
     
     if attrs["user_id"]
       obj = entity.where(active: true, user_id: attrs["user_id"], course_id: attrs["course_id"]).first
-    elsif attrs["visitor_token"] && visitor
-      obj = entity.where(active: true, visitor_id: visitor.id, course_id: attrs["course_id"]).first
     end
 
     if obj
@@ -13,8 +11,6 @@ class Trainings::MetricRepository < Base
     else
       if attrs["user_id"]
         new_obj = entity.new( course_id: attrs["course_id"], user_id: attrs["user_id"] )
-      elsif attrs["visitor_token"] && visitor
-        new_obj = entity.new( course_id: attrs["course_id"], visitor_id: visitor.id )
       end
       
       return new_obj

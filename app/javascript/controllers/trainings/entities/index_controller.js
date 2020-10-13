@@ -34,12 +34,8 @@ export default class extends Controller {
                   <div class="card-header d-flex align-items-center card-header-table-list">
                     <input class="form-control s-title-0p7rem ml-auto input-search-table" id="" placeholder="Buscar ..." type="text">
                     <div class="card-actions ml-auto py-0">
-                      <div class="dropdown" id="cardFilterEventDropdown">
-                        <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline my-0" data-toggle="dropdown" id="cardFilterEventBtn" type="button"><i class="material-icons">filter_list</i></button>
-                        <div aria-labelledby="cardFilterEventBtn" class="dropdown-menu dropdown-menu-right menu" id="cardFilterEventDiv"></div>
-                      </div>
                       <div class="dropdown">
-                        <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline my-0" data-toggle="dropdown" id="actionEventDrop" type="button"><i class="material-icons">more_vert</i></button>
+                        <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline my-0" data-toggle="dropdown" id="actionEventDrop" type="button"><i class="material-icons">add</i></button>
                         <div aria-labelledby="actionEventDrop" class="dropdown-menu dropdown-menu-right menu" style="font-size:80%">
                           <span class="dropdown-item pointer" id="newTrainingModal" data-action="click->trainings--entities--index#newTrainingModal" data-controller="trainings--entities--modal" data-target="trainings--entities--index.modal">Novo Treinamento</span>
                         </div>
@@ -57,7 +53,6 @@ export default class extends Controller {
                               <th style="font-size:80%;" scope="col" class="p-1 table-40 align-middle">Nome</th>
                               <th style="font-size:80%;" scope="col" class="p-1 table-5 align-middle">Link</th>
                               <th style="font-size:80%;" scope="col" class="p-1 table-15 align-middle text-center">Conteúdo</th>
-                              <th style="font-size:80%;" scope="col" class="p-1 table-15 align-middle text-center">Formato</th>
                               <th style="font-size:80%;" scope="col" class="p-1 table-15 align-middle text-center">Tipo</th>
                               <th style="font-size:80%;" scope="col" class="p-1 table-10 align-middle text-center">Publicado</th>
                               <th style="font-size:80%;" scope="col" class="p-1 table-5 align-middle text-center">Pontos</th>
@@ -206,7 +201,6 @@ export default class extends Controller {
                     <th style="font-size:80%;" scope="col" class="p-1 table-40 align-middle">${element.name}</th>
                     <th style="font-size:80%;" scope="col" class="p-1 table-10 align-middle" data-copy="${element.public_path}">${copyPath}</th>
                     <th style="font-size:80%;" scope="col" class="p-1 table-15 align-middle text-center">${element.content_pretty}</th>
-                    <th style="font-size:80%;" scope="col" class="p-1 table-15 align-middle text-center">${element.format_pretty}</th>
                     <th style="font-size:80%;" scope="col" class="p-1 table-15 align-middle text-center">${element.kind_pretty}</th>
                     <th style="font-size:80%;" scope="col" class="p-1 table-10 align-middle text-center">${statusPublished}</th>
                     <th style="font-size:80%;" scope="col" class="p-1 table-15 align-middle text-center">${Intl.NumberFormat('pt-BR', { style: 'decimal', maximumFractionDigits: 2 }).format(element.rating)}</th>
@@ -347,14 +341,14 @@ export default class extends Controller {
 
     if (training.is_published) {
       var data = { training: { id: training.id, published_at: null }, current_user: { current_user_id: currentUser.id } }
-      var publishHtml = `<span class="material-icons mr-1 pointer md-primary" data-toggle="tooltip" data-placement="top" title data-original-title="Publicar Curso?" data-action="click->trainings--entities--index#publishTraining">publish</span>
-                        <figcaption class="figure-caption" style="white-space:pre-wrap;">Curso Não Publicado</figcaption>`
+      var publishHtml = `<span class="material-icons mr-1 pointer md-primary" data-toggle="tooltip" data-placement="top" title data-original-title="Publicar Treinamento?" data-action="click->trainings--entities--index#publishTraining">publish</span>
+                        <figcaption class="figure-caption" style="white-space:pre-wrap;">Treinamento Não Publicado</figcaption>`
       this.publishStatusTarget.innerHTML = publishHtml
       this.requestSave(data)
     } else {
       var data = { training: { id: training.id, published_at: new Date() }, current_user: { current_user_id: currentUser.id } }
-      var publishHtml = `<span class="material-icons mr-1 pointer md-primary" data-toggle="tooltip" data-placement="top" title data-original-title="Despublicar Curso" data-action="click->trainings--entities--index#publishTraining">highlight_off</span>
-                        <figcaption class="figure-caption" style="white-space:pre-wrap;">Curso Publicado</figcaption>`
+      var publishHtml = `<span class="material-icons mr-1 pointer md-primary" data-toggle="tooltip" data-placement="top" title data-original-title="Despublicar Treinamento" data-action="click->trainings--entities--index#publishTraining">highlight_off</span>
+                        <figcaption class="figure-caption" style="white-space:pre-wrap;">Treinamento Publicado</figcaption>`
       this.publishStatusTarget.innerHTML = publishHtml
       this.requestSave(data)
     }

@@ -64,7 +64,7 @@ class Trainings::Sessions::Update
   def message
     # return message = "A ação não é permitida" unless @can_current_user_update_session
     if @valid
-      message = "Sessão de Curso atualizada com sucesso!"
+      message = "Sessão de Treinamento atualizada com sucesso!"
       return message
     else
       message = "Tivemos seguinte(s) problema(s):"

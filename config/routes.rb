@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   scope path: '/a' do
     resources :trainings, only: [:index, :show], path: '/treinamentos', controller: 'web/trainings/entities'
   end
+
+  get "/treinamentos/:id", to: "web/trainings/entities#public_show"
   
   namespace :api, path: '/' do
     namespace :v1, path: '/' do

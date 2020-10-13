@@ -11,6 +11,7 @@ class Trainings::EntityMapper
     # if material.attached?
     #   model_attributes = model_attributes.merge({"material_url" => material.blob.service_url})
     # end
+
     model_attributes = model_attributes.merge({"public_path" => "#{ENV['DEFAULT_URL_HOST']}/medschool/#{model.slug}"})
     model_attributes = model_attributes.merge({"sharing_pretty" => ::Trainings::EntityRepository::ENUM_SHARING[model.sharing]})
     model_attributes = model_attributes.merge({"format_pretty" => ::Trainings::EntityRepository::ENUM_FORMAT[model.format]})

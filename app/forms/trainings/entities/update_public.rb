@@ -13,13 +13,13 @@ class Trainings::Entities::UpdatePublic
 
     # return false unless @valid_query
     
-    # if [1, 2, 3, 4, 5].include?(@training_params[:rating].to_i)
-    #   @training = training
-    #   @training.total_rating += @training_params[:rating].to_i
-    #   @training.total_voting += 1
-    # end
+    if [1, 2, 3, 4, 5].include?(@training_params[:rating].to_i)
+      @training = training
+      @training.total_rating += @training_params[:rating].to_i
+      @training.total_voting += 1
+    end
 
-    @valid = @training.valid?
+    # @valid = @training.valid?
   end
 
   def training
@@ -29,13 +29,13 @@ class Trainings::Entities::UpdatePublic
   def save
     # return false unless @valid_query
     ActiveRecord::Base.transaction do
-      if @valid
+      # if @valid
         @training.save
         true
-      else
-        false
-        raise ActiveRecord::Rollback
-      end
+      # else
+      #   false
+      #   raise ActiveRecord::Rollback
+      # end
     end
   end
   

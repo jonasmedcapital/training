@@ -15,7 +15,7 @@ class Trainings::CommentMapper
 
     model_attributes = {}
     model_attributes = model_attributes.merge({ "training_name" => training.name })
-    model_attributes = model_attributes.merge({ "training_path" => "#{ENV['DEFAULT_URL_HOST']}/a/cursos/#{training.slug}" })
+    model_attributes = model_attributes.merge({ "training_path" => "#{ENV['DEFAULT_URL_HOST']}/a/treinamentos/#{training.slug}" })
     model_attributes = model_attributes.merge({ "training_public_path" => "#{ENV['DEFAULT_URL_HOST']}/medschool/#{training.slug}" })
     model_attributes = model_attributes.merge({ "training_kind_pretty" => ::Trainings::EntityRepository::ENUM_KIND[training.kind]})
     model_attributes = model_attributes.merge({ "comment_name" => comment.name })

@@ -5,7 +5,7 @@ class Training::Speaker < ApplicationRecord
   # Storage
   
   # Relations
-  belongs_to :course, class_name: "Training::Entity", foreign_key: "course_id"
+  belongs_to :training, class_name: "Training::Entity", foreign_key: "course_id"
   belongs_to :author, class_name: "Content::Author", foreign_key: "speaker_id"
   
   # Validations

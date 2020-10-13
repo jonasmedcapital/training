@@ -57,7 +57,7 @@ class Trainings::Sessions::Create
   def message
     # return message = "A ação não é permitida" unless @can_current_user_create_session
     if @valid
-      message = "Sessão de Curso criada com sucesso!"
+      message = "Sessão de Treinamento criada com sucesso!"
       return message
     else
       message = "Tivemos seguinte(s) problema(s):"

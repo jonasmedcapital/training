@@ -16,29 +16,29 @@ class Trainings::Metrics::SavePublic
     # return false unless @valid_query
     @metric = metric
 
-    # if @metric_params[:rating]
-    #   @metric.rating = @metric_params[:rating]
-    # end
+    if @metric_params[:rating]
+      @metric.rating = @metric_params[:rating]
+    end
 
-    # if @metric_params[:progress]
-    #   session = @metric_params[:progress].split("-")[0]
-    #   lesson = @metric_params[:progress].split("-")[1]
-    #   duration = @metric_params[:progress].split("-")[2]
-    #   status = ActiveModel::Type::Boolean.new.cast(@metric_params[:progress].split("-")[3])
+    if @metric_params[:progress]
+      session = @metric_params[:progress].split("-")[0]
+      lesson = @metric_params[:progress].split("-")[1]
+      duration = @metric_params[:progress].split("-")[2]
+      status = ActiveModel::Type::Boolean.new.cast(@metric_params[:progress].split("-")[3])
 
-    #   if status
-    #     @metric.lessons_progress += 1
-    #     @metric.duration_progress += duration.to_i
-    #     @metric.progress += ["#{session}-#{lesson}-#{duration}"]
-    #   else
-    #     @metric.lessons_progress -= 1
-    #     @metric.duration_progress -= duration.to_i
-    #     @metric.progress -= ["#{session}-#{lesson}-#{duration}"]
-    #   end
+      if status
+        @metric.lessons_progress += 1
+        @metric.duration_progress += duration.to_i
+        @metric.progress += ["#{session}-#{lesson}-#{duration}"]
+      else
+        @metric.lessons_progress -= 1
+        @metric.duration_progress -= duration.to_i
+        @metric.progress -= ["#{session}-#{lesson}-#{duration}"]
+      end
       
-    # end
+    end
     
-    @valid = @metric.valid?
+    # @valid = @metric.valid?
   end
 
   def metric
@@ -48,13 +48,13 @@ class Trainings::Metrics::SavePublic
   def save
     # return false unless @valid_query
     ActiveRecord::Base.transaction do
-      if @valid
+      # if @valid
         @metric.save
         true
-      else
-        false
-        raise ActiveRecord::Rollback
-      end
+      # else
+      #   false
+      #   raise ActiveRecord::Rollback
+      # end
     end
   end
   

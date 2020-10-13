@@ -476,7 +476,6 @@ export default class extends Controller {
       })
       .catch(error => {
         processingSnackbar("danger", controller.getControllerByIdentifier("app--shared--messages").generalError()) //, device)
-        console.log(error)
       })
   }
 
@@ -514,7 +513,7 @@ export default class extends Controller {
     fetch(url, init)
       .then(response => response.json())
       .then(response => {
-        this.application.all_speakers = response.data.cln.collection
+        this.application.all_speakers = response.data.cln
       })
   }
 

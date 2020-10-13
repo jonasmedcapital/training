@@ -5,6 +5,7 @@ export default class extends Controller {
 
   connect() {
     this.doCommentInput()
+    console.log(this.application)
   }
 
   createComment(ev) {
@@ -12,6 +13,8 @@ export default class extends Controller {
       if ((ev.type == "keyup" && ev.key == "Escape" && ev.shiftKey == false)) {
         this.commentBodyTarget.value = ""
       } else if ((ev.type == "keyup" && ev.key == "Enter" && ev.shiftKey == false) || ev.type == "click") {
+        // if (this.application.current_user) {
+        console.log(this.application.current_user)
         if (this.application.current_user) {
           var commenterName = this.application.current_user.name
           var commenterEmail = this.application.current_user.email

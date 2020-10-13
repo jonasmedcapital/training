@@ -98,7 +98,7 @@ export default class extends Controller {
       //   controller.getControllerByIdentifier("users--accounts--entities--show").showHtml()
       // })
       } //  else {
-      //   this.viewTitleTarget.innerText = "Nenhum Curso Selecionado"
+      //   this.viewTitleTarget.innerText = "Nenhum Treinamento Selecionado"
       //   this.viewTrainingBodyTarget.remove()
       // }
 

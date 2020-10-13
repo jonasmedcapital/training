@@ -60,10 +60,10 @@ export default class extends Controller {
           // controller.cardBodySpeakerTarget.insertAdjacentHTML("beforeend", controller.getControllerByIdentifier("trainings--speakers--unit").speakerPartial(speaker))          
           controller.getControllerByIdentifier("app--helpers--elements").tooltip()
         }
-        processingSnackbar(response.type, response.message, device)
+        processingSnackbar(response.type, response.message) //, device)
       })
       .catch(error => {
-        processingSnackbar("danger", controller.getControllerByIdentifier("app--shared--messages").generalError(), device)
+        processingSnackbar("danger", controller.getControllerByIdentifier("app--shared--messages").generalError()) //, device)
       })
   }
   

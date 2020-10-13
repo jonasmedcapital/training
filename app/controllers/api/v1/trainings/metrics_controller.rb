@@ -1,6 +1,6 @@
 class Api::V1::Trainings::MetricsController < ApplicationController
 
-  skip_before_action :require_user, only: [:save_public, :read_public]
+  # skip_before_action :require_user, only: [:save_public, :read_public]
 
   def save_public
     metric = ::Trainings::Metrics::SavePublic.new(params)

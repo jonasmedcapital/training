@@ -5,7 +5,7 @@ class Training::Metric < ApplicationRecord
   # Storage
   
   # Relations
-  belongs_to :course, class_name: "Training::Entity", foreign_key: "course_id"
+  belongs_to :training, class_name: "Training::Entity", foreign_key: "course_id"
   belongs_to :visitor, class_name: "Ahoy::Visitor", foreign_key: "visitor_id", optional: true
   belongs_to :user, class_name: "User", foreign_key: "user_id", optional: true
   
