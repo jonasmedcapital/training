@@ -59,22 +59,22 @@ class Trainings::Entities::UpdatePublic
 
   def message
     # return message = "Não conseguimos computar a sua avaliação!" unless @valid_query
-    if @valid
+    # if @valid
       message = "Avaliação computada com sucesso!"
       return message
-    else
-      message = "Não conseguimos computar a sua avaliação!"
-      return message
-    end
+    # else
+    #   message = "Não conseguimos computar a sua avaliação!"
+    #   return message
+    # end
   end
 
   def type
     # return "danger" unless @valid_query
-    if @valid
+    # if @valid
       return "success"
-    else
-      return "danger"
-    end
+    # else
+    #   return "danger"
+    # end
   end
 
   # private

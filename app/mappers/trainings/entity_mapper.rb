@@ -12,7 +12,7 @@ class Trainings::EntityMapper
     #   model_attributes = model_attributes.merge({"material_url" => material.blob.service_url})
     # end
 
-    model_attributes = model_attributes.merge({"public_path" => "#{ENV['DEFAULT_URL_HOST']}/medschool/#{model.slug}"})
+    model_attributes = model_attributes.merge({"public_path" => "#{ENV['DEFAULT_URL_HOST']}/treinamentos/#{model.slug}"})
     model_attributes = model_attributes.merge({"sharing_pretty" => ::Trainings::EntityRepository::ENUM_SHARING[model.sharing]})
     model_attributes = model_attributes.merge({"format_pretty" => ::Trainings::EntityRepository::ENUM_FORMAT[model.format]})
     model_attributes = model_attributes.merge({"content_pretty" => ::Trainings::EntityRepository::ENUM_CONTENT[model.content]})
@@ -28,7 +28,7 @@ class Trainings::EntityMapper
   def self.map model
     model_attributes = model.attributes
     model_attributes = model_attributes.merge({"is_published" => model.published_at ? true : false})
-    model_attributes = model_attributes.merge({"public_path" => "#{ENV['DEFAULT_URL_HOST']}/medschool/#{model.slug}"})
+    model_attributes = model_attributes.merge({"public_path" => "#{ENV['DEFAULT_URL_HOST']}/treinamentos/#{model.slug}"})
     model_attributes = model_attributes.merge({"sharing_pretty" => ::Trainings::EntityRepository::ENUM_SHARING[model.sharing]})
     model_attributes = model_attributes.merge({"format_pretty" => ::Trainings::EntityRepository::ENUM_FORMAT[model.format]})
     model_attributes = model_attributes.merge({"content_pretty" => ::Trainings::EntityRepository::ENUM_CONTENT[model.content]})

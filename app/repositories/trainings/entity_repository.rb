@@ -21,8 +21,8 @@ class Trainings::EntityRepository < Base
       notes: attrs["notes"],
       sharing: attrs["sharing"],
       content: attrs["content"],
-      format: attrs["format"],
-      kind: attrs["kind"],
+      format: "free", # always free
+      kind: "training", # always training
     )
   end
 

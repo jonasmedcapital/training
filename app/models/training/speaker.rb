@@ -9,6 +9,7 @@ class Training::Speaker < ApplicationRecord
   belongs_to :author, class_name: "Content::Author", foreign_key: "speaker_id"
   
   # Validations
+   validates :course_id, uniqueness: { scope: :speaker_id, message: "Esse tutor já foi adicionado" }
 
   #Enums
             

@@ -4,8 +4,7 @@ export default class extends Controller {
   static targets = ["navdrawer"]
 
   connect() {
-    // this.getCurrentUserSidebarPermissions()
-    // this.application.current_user = currentUser
+    this.application.current_user = currentUser
   }
 
 

@@ -198,7 +198,7 @@ export default class extends Controller {
                               </div>
                             </div>
                             <div class="col-12 data-target="trainings--entities--public-show.speakers"">
-                              <h5 class="stitle-class-training">Palestrantes</h5>
+                              <h5 class="stitle-class-training">Tutor</h5>
                               ${speakerHtml}
                             </div>
                           </div>
@@ -305,6 +305,8 @@ export default class extends Controller {
         done.innerText = parseInt(countLessons)
       }
     });
+
+    console.log(countLessons)
 
   }
 
