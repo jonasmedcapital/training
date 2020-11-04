@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :posts
   devise_for :users,
     path: '',
     path_names: {sign_in: 'entrar',
@@ -21,6 +22,7 @@ Rails.application.routes.draw do
 
   scope path: '/a' do
     resources :trainings, only: [:index, :show], path: '/treinamentos', controller: 'web/trainings/entities'
+    resources :uploads, only: [:index, :show], path: '/uploads', controller: 'web/uploads/entities'
   end
 
   get "/treinamentos/:id", to: "web/trainings/entities#public_show"
@@ -45,32 +47,36 @@ Rails.application.routes.draw do
       end
       
       namespace :trainings do
-          post "entities/validate_field", to: "entities#validate_field"
-          post "entities/list", to: "entities#list"
-          post "entities/read", to: "entities#read"
-          post "entities/read_public", to: "entities#read_public"
-          post "entities/create", to: "entities#create"
-          put "entities/update", to: "entities#update"
-          put "entities/update_public", to: "entities#update_public"
-          put "entities/save_upload", to: "entities#save_upload"
+        post "entities/validate_field", to: "entities#validate_field"
+        post "entities/list", to: "entities#list"
+        post "entities/read", to: "entities#read"
+        post "entities/read_public", to: "entities#read_public"
+        post "entities/create", to: "entities#create"
+        put "entities/update", to: "entities#update"
+        put "entities/update_public", to: "entities#update_public"
+        put "entities/save_upload", to: "entities#save_upload"
 
-          post "sessions/validate_field", to: "sessions#validate_field"
-          post "sessions/create", to: "sessions#create"
-          put "sessions/update", to: "sessions#update"
+        post "sessions/validate_field", to: "sessions#validate_field"
+        post "sessions/create", to: "sessions#create"
+        put "sessions/update", to: "sessions#update"
 
-          post "lessons/validate_field", to: "lessons#validate_field"
-          post "lessons/create", to: "lessons#create"
-          put "lessons/update", to: "lessons#update"
-          put "lessons/save_upload", to: "lessons#save_upload"
+        post "lessons/validate_field", to: "lessons#validate_field"
+        post "lessons/create", to: "lessons#create"
+        put "lessons/update", to: "lessons#update"
+        put "lessons/save_upload", to: "lessons#save_upload"
 
-          post "speakers/create", to: "speakers#create"
-          delete "speakers/destroy", to: "speakers#destroy"
+        post "speakers/create", to: "speakers#create"
+        delete "speakers/destroy", to: "speakers#destroy"
 
-          post "metrics/save_public", to: "metrics#save_public"
-          post "metrics/read_public", to: "metrics#read_public"
+        post "metrics/save_public", to: "metrics#save_public"
+        post "metrics/read_public", to: "metrics#read_public"
 
-          post "comments/create", to: "comments#create"
-          put "comments/update", to: "comments#update"
+        post "comments/create", to: "comments#create"
+        put "comments/update", to: "comments#update"
+      end
+
+      namespace :uploads do
+        post "entities/upload", to: "entities#upload"
       end
     end
   end

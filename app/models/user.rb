@@ -14,11 +14,18 @@ class User < ApplicationRecord
   # Relation
   has_one :account, class_name: "Account::Entity", foreign_key: "user_id"
 
+  #Callbacks
+  after_create :send_welcome
+
   def should_generate_new_friendly_id?
     self.cpf_changed?
   end
 
   def normalize_friendly_id(value)
     value.to_s.parameterize(preserve_case: true)
+  end
+
+  def send_welcome
+    TestMailer.with(user: self).welcome_email.deliver_now!
   end
 end

@@ -11,6 +11,136 @@ export default class extends Controller {
     this.numberPages = []
   }
 
+  cpf_validate(cpf){
+    var eleven_cpf = ["00000000000", "11111111111", "22222222222", "33333333333", "44444444444", "55555555555", "66666666666", "77777777777", "88888888888", "99999999999"]
+
+    cpf = cpf.replace('.', "").replace('.', "").replace('-', "")
+    
+    // console.log(cpf)
+    if (cpf) {
+      if (cpf.length != 11) {
+        console.log("erro: cpf invalido")
+
+      } else if (eleven_cpf.includes(cpf)) {
+        console.log("erro: cpf invalido")
+
+      } else {
+        // prepare array
+        var cpf_array
+        cpf_array = Array.from(String(cpf), Number)
+
+        // first digit
+        var verify_digit_one = cpf_array[9]
+        var sum = 0
+        for (var index = 0; index < cpf_array.length - 2; index++) {
+          sum += (cpf_array[index] * (index + 1));
+        }
+        var rest = sum % 11
+        var digit_one = rest.toString().slice(-1);
+        if (digit_one != verify_digit_one) {
+          console.log("erro: cpf invalido")
+          
+        }
+
+        // second digit
+        var verify_digit_two = cpf_array[10]
+        sum = 0
+        for (var index = 0; index < cpf_array.length - 1; index++) {
+          sum += (cpf_array[index] * (index));
+        }
+        rest = sum % 11
+        var digit_two = rest.toString().slice(-1);
+        if (digit_two != verify_digit_two) {
+          console.log("erro: cpf invalido")
+        } else {
+          console.log("cpf válido")
+        }
+      }
+    } else {
+      console.log("erro: cpf invalido")
+    }
+  }
+
+  cnpj_validate(cnpj) {
+    var fourteen_cnpj = ["00000000000000", "11111111111111", "22222222222222", "33333333333333", "44444444444444", "55555555555555", "66666666666666", "77777777777777", "88888888888888", "99999999999999"]
+
+    cnpj = cnpj.replace('.', "").replace('.', "").replace('/', "").replace('-', "")
+    console.log(cnpj)
+
+    if (cnpj) {
+      if (cnpj.length != 14) {
+        console.log("erro: cnpj invalido")
+
+      } else if (fourteen_cnpj.includes(cnpj)) {
+        console.log("erro: cnpj invalido")
+
+      } else {
+        // prepare array
+        var cnpj_array
+        cnpj_array = Array.from(String(cnpj), Number)
+        console.log(cnpj_array)
+
+        // first digit
+        var verify_digit_one = cnpj_array[12]
+        var factor = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
+        var sum = 0
+        for (var index = 0; index < cnpj_array.length - 2; index++) {
+          sum += (cnpj_array[index] * (factor[index]));
+        }
+
+        var rest = sum % 11
+
+        // if the rest is less than two the validator digit one must be 0
+        if (rest < 2) {
+          if (verify_digit_one == 0) {
+            console.log("dígito validador um válido (0)")
+          } else {
+            console.log("erro: cnpj invalido")
+          }
+        // if the rest is greater than or equal two the validator digit one must be 11 subtracted from the rest
+        } else {
+          var digit_one = (11 - rest).toString().slice(-1);
+          console.log(digit_one)
+          console.log(verify_digit_one)
+          if (digit_one == verify_digit_one) {
+            console.log("dígito validador um válido")
+          } else {
+            console.log("erro: cnpj invalido")
+          }
+        }
+
+        // second digit
+        var verify_digit_two = cnpj_array[13]
+        factor.unshift(6)
+        sum = 0
+        for (var index = 0; index < cnpj_array.length - 1; index++) {
+          sum += (cnpj_array[index] * (factor[index]));
+        }
+
+        rest = sum % 11
+
+        // if the rest is less than two the validator digit one must be 0
+        if (rest < 2) {
+          if (verify_digit_two == 0) {
+            console.log("dígito validador dois válido (0)")
+          } else {
+            console.log("erro: cnpj invalido")
+          }
+        // if the rest is greater than or equal two the validator digit one must be 11 subtracted from the rest
+        } else {
+          var digit_two = (11 - rest).toString().slice(-1);
+          if (digit_two == verify_digit_two) {
+            console.log("dígito validador dois válido")
+          } else {
+            console.log("erro: cnpj invalido")
+          }
+        }
+      }
+    } else {
+      console.log("erro: cnpj invalido")
+    }
+  }
+
   getCurrentUserPermissions() {
     const featureNames = ["training_entities"]
     const data = { permission: { features: featureNames }, current_user: { current_user_id: currentUser.id } }
