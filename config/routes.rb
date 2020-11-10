@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   scope path: '/a' do
     resources :trainings, only: [:index, :show], path: '/treinamentos', controller: 'web/trainings/entities'
     resources :uploads, only: [:index, :show], path: '/uploads', controller: 'web/uploads/entities'
+    resources :dropzones, only: [:index, :show], path: '/dropzones', controller: 'web/dropzones/entities'
   end
 
   get "/treinamentos/:id", to: "web/trainings/entities#public_show"
@@ -77,6 +78,9 @@ Rails.application.routes.draw do
 
       namespace :uploads do
         post "entities/upload", to: "entities#upload"
+      end
+      namespace :dropzones do
+        post "entities/dropzone", to: "entities#dropzone"
       end
     end
   end

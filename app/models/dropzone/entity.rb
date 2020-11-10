@@ -1,8 +1,9 @@
-class Upload::Entity < ApplicationRecord
+class Dropzone::Entity < ApplicationRecord
 
   # self.table_name = "training_entities"
   
-  # Relations 
+  # Relations
+  has_one_attached :feature_image 
   
   # Validations
 
