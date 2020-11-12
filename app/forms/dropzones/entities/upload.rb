@@ -1,19 +1,19 @@
-class Dropzones::Entities::Dropzone
+class Dropzones::Entities::Upload
   attr_accessor :status, :type, :message
 
   def initialize(params)
-    # @dropzone_params.first.permit(@dropzone_params.first.keys).to_h
-    @dropzone_params = params.require(:dropzone)
-    # @dropzone = dropzone
+    # @upload_params.first.permit(@upload_params.first.keys).to_h
+    @upload_params = params.require(:upload).permit(:file, :name)
+    # @upload = upload
   end
 
-  def dropzone
-    @dropzone ||= ::Dropzones::EntityRepository.build(@dropzone_params)
+  def upload
+    @upload ||= ::Dropzones::EntityRepository.build(@upload_params)
   end
 
   def save
     # ActiveRecord::Base.transaction do
-      # if @dropzone.save
+      # if @upload.save
     true
       # else
       #   false
@@ -40,12 +40,12 @@ class Dropzones::Entities::Dropzone
 
   def message
     # if @valid
-    message = "dropzone realizado com sucesso!"
+    message = "upload realizado com sucesso!"
     #   return message
     # else
       # message = "Tivemos seguinte(s) problema(s):"
       # i = 0
-      # @dropzone.errors.messages.each do |key, value|
+      # @upload.errors.messages.each do |key, value|
       #   i += 1
       #   message += " (#{i}) #{value.first}"
       # end
@@ -62,9 +62,9 @@ class Dropzones::Entities::Dropzone
   end
 
   def data
-    @dropzone_params
-    # return cln = [] unless @can_current_user_create_dropzone
-    # cln = ::Dropzones::EntityRepository.read(@dropzone)
+    @upload_params
+    # return cln = [] unless @can_current_user_create_upload
+    # cln = ::Dropzones::EntityRepository.read(@upload)
     # return {:cln => cln.compact}.as_json
   end
 

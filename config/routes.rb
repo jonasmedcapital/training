@@ -79,8 +79,10 @@ Rails.application.routes.draw do
       namespace :uploads do
         post "entities/upload", to: "entities#upload"
       end
+
       namespace :dropzones do
         post "entities/dropzone", to: "entities#dropzone"
+        post "entities/upload", to: "entities#upload"
       end
     end
   end

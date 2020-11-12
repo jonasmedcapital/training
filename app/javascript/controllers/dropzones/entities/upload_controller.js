@@ -1,21 +1,26 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["uploadCol", "showCol", "tableBody", "saveBtn", "tableLine" ]
+  static targets = ["uploadCol", "showCol", "tableBody", "saveBtn", "tableRow", "uploadReceipt", "labelUploadReceipt", "fileNameReceipt", "progressUploadReceipt", "progressUploadReceiptBar", "progressUploadReceiptCounter", "buttonDisable", "spanEdit"]
 
   connect() {
     console.log("Hello From Dropzone Controller")
     this.files = []
-    this.types = ["pdf", "png", "jpeg"]
+    this.filesUploadeds = []
+    this.filesNames = []
+    this.canUpload = []
+    this.types = ["pdf", "png", "jpeg", ".xlsx", ".docx", ".txt"]
+    this.indexFetch = 0
     this.douploadColHtml()
     this.doShowColHtml()
   }
 
   douploadColHtml() {
     var html = `
-                  <label class="drop-area" for="dropzoneArea" data-action="dragover->dropzones--entities--upload#dragOverHandler drop->dropzones--entities--upload#dropHandler">
+                  <label class="drop-area" style="height: 500;" for="dropzoneArea" data-action="dragover->dropzones--entities--upload#dragOverHandler drop->dropzones--entities--upload#dropHandler">
                     <p class="font-weight-bold">*Clique ou arraste arquivos para área pontilhada</p>
                     <p class="font-weight-bold">*O tamanho dos arquivos deve ser menor que 5MB</p>
+                    <p class="font-weight-bold">*Doc do carro</p>
                   </label>
                   <input class="file-input mt-0" type="file" id="dropzoneArea" multiple data-action="change->dropzones--entities--upload#dropHandler"></input>`
 
@@ -24,7 +29,7 @@ export default class extends Controller {
 
   doShowColHtml() {
     var html = `
-                <div class="card mt-2 mb-3" style="width:100%;height:550px;display:relative;" data-target="trainings--entities--upload.cardBody">
+                <div class="card mt-2 mb-3" style="width:100%;height:550px;display:relative;" data-target="dropzones--entities--upload.cardBody">
                   <div class="card-header d-flex align-items-center card-header-table-list">
                     <h6 class="card-title display-4" style="padding:1rem;font-size:110%;margin-bottom:0px;">Arquivos para upload</h6>
                   </div>
@@ -35,11 +40,12 @@ export default class extends Controller {
                           <table class="table table-sm table-hover table-search">
                             <thead>
                               <tr>
+                                <th scope="col-md-1"></th>
                                 <th scope="col-md-4">Nome</th>
                                 <th scope="col-md-1"></th>
                                 <th scope="col-md-1">Tamanho</th>
                                 <th scope="col-md-1">Tipo</th>
-                                <th scope="col-md-1">Erros</th>
+                                <th scope="col-md-1">Progresso</th>
                                 <th scope="col-md-1"></th>
                               </tr>
                             </thead>
@@ -50,10 +56,10 @@ export default class extends Controller {
                       </div>
                     </div>
                   </div>
-                  <div class="card-footer py-0" data-target="trainings--entities--upload.footerTable">
+                  <div class="card-footer py-0" data-target="dropzones--entities--upload.footerTable">
                   </div>
                 </div>
-                <div class="d-flex flex-row-reverse">  
+                <div class="d-flex flex-row-reverse">                    
                   <button type="button" class="btn btn-secondary" data-action="click->dropzones--entities--upload#saveUploads" data-target="dropzones--entities--upload.saveBtn">Upload</button>
                 </div>`
 
@@ -135,25 +141,76 @@ export default class extends Controller {
     var html = ``
     var controller = this
     this.files.forEach(element => {
-      html = `
-              <tr id="${controller.files.indexOf(element)}" class="${((element.size / 1000000).toFixed(2) <= 5 && controller.types.includes(element.type.split("/")[1])) ? "table-success" : "table-danger"}">
+      var index = controller.files.indexOf(element)
+      
+      var erro = ""
+
+      if ((element.size / 1000000).toFixed(2) <= 5 && controller.types.includes(element.type.split("/")[1])) {
+        var spanError = `<span style="color:#26C485;"><i class="fas fa-check-double" data-toggle="tooltip" data-placement="top" title data-original-title="ok">`
+        
+        controller.canUpload[index] = true
+      } else {
+        
+        if ((element.size / 1000000).toFixed(2) > 5) {
+          erro += "Arquivo deve ser menor que 5MB.\n"
+        }
+
+        if (!controller.types.includes(element.type.split("/")[1])) {
+          erro += "Formato do arquivo não é permitido."
+        }
+
+        var spanError = `<span style="color:#F25F5C;"><i class="fas fa-times-circle" data-toggle="tooltip" data-placement="top" title data-original-title="${erro}">`
+        controller.canUpload[index] = false
+      }
+
+      if (element.name.length > 40) {
+        var name = element.name.split('.').slice(0, -1).join('.').slice(0, 40)
+      } else {
+        var name = element.name.split('.').slice(0, -1).join('.')
+      }
+
+      var size = ((element.size / 1000000).toFixed(2) + "MB")
+
+      var type = element.name.substr(element.name.lastIndexOf('.') + 1)
+
+      html = `<tr id="${index}" data-target="dropzones--entities--upload.tableRow-${index}">
+
+                <td col-md-1 style="font-size:80%;">${spanError}</td>
                 
-                <td col-md-4 style="font-size:80%;"><span class="text-bold justify">${element.name.length > 40 ? (element.name.slice(0, 45) + "...") : element.name}</span><input autofocus data-field="order" data-action="keyup->dropzones--entities--upload#saveUnit change->dropzones--entities--upload#saveUnit blur->dropzones--entities--upload#saveUnit" class="form-control textarea p-1 s-title-0p85rem d-none" type="string" required></td>
-                <td col-md-1 style="font-size:80%;"><button type="button" class="btn btn-sm btn-table p-0" data-toggle="tooltip" data-placement="top" title data-original-title="Editar nome"><span class="material-icons md-sm md-dark" data-action="click->dropzones--entities--upload#editUnit">edit</span></button></td>
-                <td col-md-1 style="font-size:80%;">${((element.size / 1000000).toFixed(2) + "MB")}</td>
-                <td col-md-1 style="font-size:80%;">.${element.type.split("/")[1]}</td>
-                <td col-md-1 style="font-size:80%;"></td>
-                <td id="${controller.files.indexOf(element)}" col-md-1 style="font-size:80%;"><button type="button" class="btn btn-sm btn-table p-0" data-toggle="tooltip" data-placement="top" title data-original-title="Apagar arquivo"><span class="material-icons md-sm md-dark" data-action="click->dropzones--entities--upload#deleteFile">delete</span></button></td>
+                <td col-md-4 style="font-size:80%;"><span class="text-bold justify">${name}</span><input autofocus data-field="order" data-action="keyup->dropzones--entities--upload#saveUnit change->dropzones--entities--upload#saveUnit blur->dropzones--entities--upload#saveUnit" class="form-control textarea p-1 s-title-0p85rem d-none" type="string" required></td>
+                
+                <td col-md-1 style="font-size:80%;"><button type="button" class="btn btn-sm btn-table p-0" data-toggle="tooltip" data-placement="top" title data-original-title="Editar nome" data-target="dropzones--entities--upload.buttonDisable" data-action="click->dropzones--entities--upload#editUnit"><span class="material-icons md-sm md-dark data-target="dropzones--entities--upload.spanEdit-${index}" >edit</span></button></td>
+                
+                <td col-md-1 style="font-size:80%;">${size}</td>
+                
+                <td col-md-1 style="font-size:80%;">.${type}</td>
+                
+                <td>
+                  <div class="form-group form-valid-group my-0 text-center">
+                    <span class="fileNameForm" class="mx-2"></span>
+                    <h7 class="progress"><span class="progress_count"></span></h7>
+                    <div class="progress" style="height: 6px;overflow: inherit;" data-target="dropzones--entities--upload.progressUploadReceipt">
+                      <div class="progress-bar" role="progressbar" style="width:0%;border-bottom:0.5rem solid #053B5E;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" data-target="dropzones--entities--upload.progressUploadReceiptBar-${index}"></div>
+                    </div>
+                    <span data-target="dropzones--entities--upload.progressUploadReceiptCounter-${index}" class="d-block"></span>
+                  </div>
+                </td>
+                
+                <td id="${index}" col-md-1 style="font-size:80%;"><button type="button" class="btn btn-sm btn-table p-0" data-toggle="tooltip" data-placement="top" title data-original-title="Apagar arquivo" data-target="dropzones--entities--upload.buttonDisable" data-action="click->dropzones--entities--upload#deleteFile"><span class="material-icons md-sm md-dark">delete</span></button></td>
               </tr>`
 
       this.tableBodyTarget.insertAdjacentHTML("beforeend", html)
     });
 
+    this.getControllerByIdentifier("app--helpers--elements").tooltip()
+
   }
 
   editUnit(ev) {
-    console.log(ev)
-    console.log(ev.target.parentElement.parentElement.previousElementSibling.childNodes[0])
+
+    ev.target.innerHTML = ``
+    ev.target.innerHTML = `<span class="material-icons md-sm md-dark" data-target="dropzones--entities--upload.spanEdit-${"0"}">save</span>`
+
     var span = ev.target.parentElement.parentElement.previousElementSibling.childNodes[0]
     var input = ev.target.parentElement.parentElement.previousElementSibling.childNodes[1]
     span.classList.add("d-none")
@@ -163,8 +220,12 @@ export default class extends Controller {
   }
 
   saveUnit(ev) {
+    var index = ev.target.parentElement.parentElement.id
     var span = ev.target.previousElementSibling
     var input = ev.target
+
+    this.nameTarget(`spanEdit-${index}`).innerHTML = ``
+    this.nameTarget(`spanEdit-${index}`).innerHTML = `<span class="material-icons md-sm md-dark" data-target="dropzones--entities--upload.spanEdit-${index}">edit</span>`
 
     if ((ev.type == "keyup" && ev.key == "Escape" && ev.shiftKey == false)) {
       span.classList.remove("d-none")
@@ -175,8 +236,8 @@ export default class extends Controller {
       span.classList.remove("d-none")
       input.classList.add("d-none")
       if (value != span.innerText && value != "") {
+        this.filesNames[index] = value
         this.bindOutput(span, field, value)
-        // const data = { session: { id: this.element.dataset.id, value: value, field: field }, current_user: { current_user_id: currentUser.id } }
       }
     }
   }
@@ -190,33 +251,128 @@ export default class extends Controller {
   }
 
   deleteFile(ev) {
+    if (ev.type == "click") {
     var index = ev.target.parentElement.parentElement.id
+    } else {
+      var index = ev
+    }
     if (index > -1) {
       this.files.splice(index, 1)
     }
-
+    
     this.doBodyHtml()
   }
 
   saveUploads() {
-    var data = { current_user: { current_user_id: currentUser.id } }
-    const token = $('meta[name=csrf-token]').attr('content');
-    const url = "/dropzones/entities/upload"
-    const init = { method: "POST", credentials: "same-origin", headers: { "X-CSRF-Token": token, 'Content-Type': 'application/json' }, body: JSON.stringify(data) }
+    this.disableBtns()
+    this.fetchFiles()
+  }
+
+  disableBtns() {
+    this.buttonDisableTargets.forEach(element => {
+      element.children[0].style.color = "#fbfcff"
+      element.children[0].classList.remove("md-dark")
+      element.disabled = true
+    });
+  }
+
+  fetchFiles() {
+    if (this.canUpload[this.indexFetch]) {
+      this.progressCount(0, this.indexFetch)
+      var file = this.files[this.indexFetch]
+      var name = this.filesNames[this.indexFetch]
+      var data = { upload: { file: file, name: name } }
+      const token = $('meta[name=csrf-token]').attr('content');
+      const url = "/dropzones/entities/upload"
+      const init = { method: "POST", credentials: "same-origin", headers: { "X-CSRF-Token": token, 'Content-Type': 'application/json' }, body: JSON.stringify(data) }
+      var controller = this
+      fetch(url, init)
+        .then(response => response.json())
+        .then(response => {
+          if (response.save) {
+            if (controller.indexFetch == controller.files.length - 1) {
+              controller.progressCount(100, controller.indexFetch)
+              controller.stopRefreshing()
+                // controller.nameTarget(`tableRow-${controller.indexFetch}`).remove()
+              controller.filesUploadeds.push(controller.indexFetch)
+              controller.removeFilesAfterUploads()
+              controller.enableBtns()
+              console.log("ultimo arquivo upado")
+              
+            } else {
+              controller.progressCount(100, controller.indexFetch)
+              controller.stopRefreshing()
+              // controller.nameTarget(`tableRow-${controller.indexFetch}`).remove()
+              controller.filesUploadeds.push(controller.indexFetch)
+              controller.indexFetch++
+              controller.fetchFiles()
+            }
+          } else {
+            console.log("nao consegui salvar o arquivo")
+            if (conroller.indexFetch == controller.files.length - 1) {
+              controller.enableBtns()
+              controller.removeFilesAfterUploads()
+              console.log("ultimo arquivo upado")
+            }
+          }
+        })
+
+    } else {
+      if (this.indexFetch == this.files.length - 1) {
+        this.removeFilesAfterUploads()
+        this.enableBtns()
+        console.log("ultimo arquivo upado")
+      } else {
+        this.indexFetch++
+        this.fetchFiles()
+      }
+    }
+  }
+
+  enableBtns() {
+    this.buttonDisableTargets.forEach(element => {
+      element.children[0].classList.add("md-dark")
+      element.children[0].style.color = "#fbfcff"
+      element.disabled = false
+    });
+  }
+
+  removeFilesAfterUploads() {
+    for (var i = this.filesUploadeds.length - 1; i >= 0; i--) {
+      this.deleteFile(this.filesUploadeds[i])
+    }
+  }
+
+  progressCount(value, index) {
     var controller = this
-    fetch(url, init)
-      .then(response => response.json())
-      .then(response => {
-        if (response.process) {
-          this.application.trainings = response.data.cln.collection
-        } else {
-          processingSnackbar(response.type, response.message, device)
+    this.nameTarget(`progressUploadReceiptBar-${index}`).style.width = value + `%`
+    var i = 0
+    if (value != 100) {
+      this.progressTimer = setInterval(function () {
+        controller.nameTarget(`progressUploadReceiptBar-${index}`).style.width = Math.floor(i + 1) + `%`
+        controller.nameTarget(`progressUploadReceiptCounter-${index}`).innerText = Math.floor(i + 1) + `%`
+        i++
+        if (i == 95) {
+          i = 94
         }
-        this.doDataTable()
-      })
-      .catch(error => {
-        processingSnackbar("danger", controller.getControllerByIdentifier("app--shared--messages").generalError()) // device como parametro
-      })
+      }, 500);
+    }
+  }
+
+  stopRefreshing() {
+    if (this.progressTimer) {
+      clearInterval(this.progressTimer)
+    }
+  }
+
+  nameTarget(target) {
+    return this.targets.find(target)
+  }
+
+  getControllerByIdentifier(identifier) {
+    return this.application.controllers.find(controller => {
+      return controller.context.identifier === identifier;
+    });
   }
 
 }
