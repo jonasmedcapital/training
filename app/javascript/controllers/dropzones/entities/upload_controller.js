@@ -1,21 +1,26 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["uploadCol", "showCol", "tableBody", "saveBtn", "tableRow", "uploadReceipt", "labelUploadReceipt", "fileNameReceipt", "progressUploadReceipt", "progressUploadReceiptBar", "progressUploadReceiptCounter", "buttonDisable", "spanEdit"]
+  static targets = ["uploadCol", "showCol", "tableBody", "saveBtn", "tableRow", "uploadReceipt", "labelUploadReceipt", "fileNameReceipt", "progressUploadReceipt", "progressUploadReceiptBar", "progressUploadReceiptCounter", "buttonDisable", "spanEdit", "spanSave", "inputName", "spanName"]
 
   connect() {
     console.log("Hello From Dropzone Controller")
-    this.files = []
-    this.filesUploadeds = []
-    this.filesNames = []
-    this.canUpload = []
-    this.types = ["pdf", "png", "jpeg", ".xlsx", ".docx", ".txt"]
-    this.indexFetch = 0
-    this.douploadColHtml()
-    this.doShowColHtml()
+    
+    // THE SAME INDEX OF THESE 4 ARRAYS REFER TO THE SAME FILE
+    this.files = [] // LIST OF FILES SELECTED BY USERS, EVEN THE FILES NOT ALLOWED
+    this.filesNames = [] // TO EDIT THE FILES NAMES WE NEED ANOTHER ARRAY BECAUSE FILES TYPE DON HAVE SETTERS
+    this.canUpload = [] // ARRAY THAT DETERMINES IF THE FILES CAN BE LOADED
+    this.alreadyUploaded = [] // ARRAY WITH WITH UPLOADED FLAG
+    
+    this.filesUploadeds = [] // ARRAY WITH THE INDEXES OF UPLOADED FILES
+    this.filesPermittedTypes = ["pdf", "png", "jpeg", ".xlsx", ".docx", ".txt", "PDF", "PNG", "JPEG", ".XLSX", ".DOCX", ".TXT"] // DEFINE ALLOWED EXTENSIONS
+    this.indexFetch = 0 // INDEX TO INCREASE IN THE FETCH RECURSIVE CALL
+    this.doUploadColumnHtml() 
+    this.doShowColumnHtml()
   }
 
-  douploadColHtml() {
+  // START BASIC HTML
+  doUploadColumnHtml() {
     var html = `
                   <label class="drop-area" style="height: 500;" for="dropzoneArea" data-action="dragover->dropzones--entities--upload#dragOverHandler drop->dropzones--entities--upload#dropHandler">
                     <p class="font-weight-bold">*Clique ou arraste arquivos para área pontilhada</p>
@@ -27,7 +32,7 @@ export default class extends Controller {
     this.uploadColTarget.insertAdjacentHTML("beforeend", html)
   }
 
-  doShowColHtml() {
+  doShowColumnHtml() {
     var html = `
                 <div class="card mt-2 mb-3" style="width:100%;height:550px;display:relative;" data-target="dropzones--entities--upload.cardBody">
                   <div class="card-header d-flex align-items-center card-header-table-list">
@@ -64,168 +69,208 @@ export default class extends Controller {
                 </div>`
 
     this.showColTarget.insertAdjacentHTML("beforeend", html)
+    this.doBodyTableHtml()
   }
 
-  dragOverHandler(ev) {
-    // console.log('File(s) in drop zone');
+  // END BASIC HTML
+
+  // START DROP ACTION
+  dragOverHandler(ev) { // DETECTS IF ANY FILE IS BEING DRAGGED IN THE DROP AREA
 
     // Impedir o comportamento padrão (impedir que o arquivo seja aberto)
     ev.preventDefault();
   }
 
-  dropHandler(ev) {
-    // Impedir o comportamento padrão (impedir que o arquivo seja aberto)
+  dropHandler(ev) { // DETECTS EVENT DROP
     ev.preventDefault();
 
-    if (ev.type == "drop") {
-    // console.log('File(s) dropped');
+    if (ev.type == "drop") { // DROP IN DROPZONE
 
       if (ev.dataTransfer.items) {
 
-       
-        // Use a interface DataTransferItemList para acessar o (s) arquivo (s)
         for (var i = 0; i < ev.dataTransfer.items.length; i++) {
           
-          this.found = false
+          this.found = false // RESET THE FLAG THAT DETECTS FILES WITH THE SAME NAME
           
-          // Se os itens soltos não forem arquivos, rejeite-os
           if (ev.dataTransfer.items[i].kind === 'file') {
             var file = ev.dataTransfer.items[i].getAsFile();
-            // console.log('... file[' + i + '].name = ' + file.name);
+            
             for (var j = 0; j < this.files.length; j++) {
               if (this.files[j].name == file.name) {
-                this.found = true
-                console.log("arquivo repetido")
+                this.found = true // DETECTED FILES WITH THE SAME NAME
                 break
               }
             }
-            if (!this.found) {
+            
+            if (!this.found) { // NOW WE CAN COPY THE FILE AND ITS NAME
               this.files[this.files.length] = file
+              this.filesNames[this.filesNames.length] = file.name
+              this.alreadyUploaded[this.alreadyUploaded.length] = false
             }
           }
         }
-      } else {
-        console.log("nao entramos aqui")
-        // Use a interface DataTransfer para acessar o (s) arquivo (s)
-        for (var i = 0; i < ev.dataTransfer.files.length; i++) {
-          // console.log('... file[' + i + '].name = ' + ev.dataTransfer.files[i].name);
-        }
+      } else { 
+        console.log("WE DONT WANT GET HERE")
       }
-    } else if (ev.type == "change") {
-      // console.log('File(s) inputed');
 
-      // Use a interface Files para acessar o (s) arquivo (s)
+    } else if (ev.type == "change") { // CLICK ON DROPZONE
       for (var i = 0; i < ev.target.files.length; i++) {
         
-        this.found = false
+        this.found = false // RESET THE FLAG THAT DETECTS FILES WITH THE SAME NAME
         
-        // console.log('... file[' + i + '].name = ' + ev.target.files[i].name);
         for (var j = 0; j < this.files.length; j++) {
           if (this.files[j].name == ev.target.files[i].name) {
-            this.found = true
-            console.log("arquivo repetido")
+            this.found = true // DETECTED FILES WITH THE SAME NAME
             break
           }
         }
-        if (!this.found) {
+
+        if (!this.found) { // NOW WE CAN COPY THE FILE AND ITS NAME
           this.files[this.files.length] = ev.target.files[i]
+          this.filesNames[this.filesNames.length] = ev.target.files[i].name
+          this.alreadyUploaded[this.alreadyUploaded.length] = false
         } 
       }
     }
 
-    this.doBodyHtml()
+    this.doBodyTableHtml()
   }
 
-  doBodyHtml() {
+  // END DROP ACTION
+
+  // STAR INSERT FILES IN THE TABLE
+
+  doBodyTableHtml() {
     this.tableBodyTarget.innerHTML = ``
     var html = ``
     var controller = this
-    this.files.forEach(element => {
-      var index = controller.files.indexOf(element)
+
+    if (controller.files == undefined || controller.files == [] || controller.files.length == 0) {
       
-      var erro = ""
+      var noData = `<td colspan="9" class="p-5 align-middle text-center" style="font-size:200%;">
+                      <span class="fa-stack fa-2x">
+                        <i class="fas fa-list fa-stack-1x"></i>
+                        <i class="fas fa-ban fa-stack-2x" style="color:#EFEFEF;"></i>
+                      </span>
+                      <h5>Você não inseriu nenhum arquivo, clique ou arraste para área lateral</h5>
+                    </td>`
 
-      if ((element.size / 1000000).toFixed(2) <= 5 && controller.types.includes(element.type.split("/")[1])) {
-        var spanError = `<span style="color:#26C485;"><i class="fas fa-check-double" data-toggle="tooltip" data-placement="top" title data-original-title="ok">`
+      controller.tableBodyTarget.innerHTML = noData
+
+    } else {
+
+      this.files.forEach(element => {
+
+        var index = controller.files.indexOf(element) // INDEX TO TARGETS AND IDS
+
+        if (this.files.length == 1) {
+          var tableRow = `<tr id="${index}" data-target="dropzones--entities--upload.tableRow-${index}" class="itemRow" style="height:50px;">`
+
+        } else {
+          var tableRow = `<tr id="${index}" data-target="dropzones--entities--upload.tableRow-${index}" class="itemRow">`
+        }
         
-        controller.canUpload[index] = true
-      } else {
-        
-        if ((element.size / 1000000).toFixed(2) > 5) {
-          erro += "Arquivo deve ser menor que 5MB.\n"
+        var erro = ""
+
+        // FILE SIZE AND EXTENSION VALIDATION
+        if ((element.size / 1000000).toFixed(2) <= 5 && controller.filesPermittedTypes.includes(element.type.split("/")[1])) {
+          var spanError = `<span style="color:#26C485;"><i class="fas fa-check-double" data-toggle="tooltip" data-placement="top" title data-original-title="ok">`
+          
+          controller.canUpload[index] = true // FLAG ALLOW UPLOAD DURING FETCH
+        } else {
+          
+          if ((element.size / 1000000).toFixed(2) > 5) { // ADD TOOLTIP: GREATER THAN 5 MB
+            erro += "Arquivo deve ser menor que 5MB.\n"
+          }
+
+          if (!controller.filesPermittedTypes.includes(element.type.split("/")[1])) { // ADD TOOLTIP: EXTESION NOT PERMITTED
+            erro += "Formato do arquivo não é permitido." 
+          }
+
+          var spanError = `<span style="color:#F25F5C;"><i class="fas fa-times-circle" data-toggle="tooltip" data-placement="top" title data-original-title="${erro}">`
+          controller.canUpload[index] = false // FLAG NOT ALLOW UPLOAD DURING FETCH
         }
 
-        if (!controller.types.includes(element.type.split("/")[1])) {
-          erro += "Formato do arquivo não é permitido."
+        if (element.name.length > 40) { // REDUCE FILE NAME LENGTH AND SPLIT EXTENSION
+          var name = element.name.split('.').slice(0, -1).join('.').slice(0, 40)
+        } else {
+          var name = element.name.split('.').slice(0, -1).join('.')
         }
 
-        var spanError = `<span style="color:#F25F5C;"><i class="fas fa-times-circle" data-toggle="tooltip" data-placement="top" title data-original-title="${erro}">`
-        controller.canUpload[index] = false
-      }
+        var size = ((element.size / 1000000).toFixed(2) + "MB") // CALCULATE SIZE
 
-      if (element.name.length > 40) {
-        var name = element.name.split('.').slice(0, -1).join('.').slice(0, 40)
-      } else {
-        var name = element.name.split('.').slice(0, -1).join('.')
-      }
+        var type = element.name.substr(element.name.lastIndexOf('.') + 1) // GET ONLY EXTENSION
 
-      var size = ((element.size / 1000000).toFixed(2) + "MB")
+        // MOUNT TABLE ROW
+        html = `${tableRow}
 
-      var type = element.name.substr(element.name.lastIndexOf('.') + 1)
-
-      html = `<tr id="${index}" data-target="dropzones--entities--upload.tableRow-${index}">
-
-                <td col-md-1 style="font-size:80%;">${spanError}</td>
-                
-                <td col-md-4 style="font-size:80%;"><span class="text-bold justify">${name}</span><input autofocus data-field="order" data-action="keyup->dropzones--entities--upload#saveUnit change->dropzones--entities--upload#saveUnit blur->dropzones--entities--upload#saveUnit" class="form-control textarea p-1 s-title-0p85rem d-none" type="string" required></td>
-                
-                <td col-md-1 style="font-size:80%;"><button type="button" class="btn btn-sm btn-table p-0" data-toggle="tooltip" data-placement="top" title data-original-title="Editar nome" data-target="dropzones--entities--upload.buttonDisable" data-action="click->dropzones--entities--upload#editUnit"><span class="material-icons md-sm md-dark data-target="dropzones--entities--upload.spanEdit-${index}" >edit</span></button></td>
-                
-                <td col-md-1 style="font-size:80%;">${size}</td>
-                
-                <td col-md-1 style="font-size:80%;">.${type}</td>
-                
-                <td>
-                  <div class="form-group form-valid-group my-0 text-center">
-                    <span class="fileNameForm" class="mx-2"></span>
-                    <h7 class="progress"><span class="progress_count"></span></h7>
-                    <div class="progress" style="height: 6px;overflow: inherit;" data-target="dropzones--entities--upload.progressUploadReceipt">
-                      <div class="progress-bar" role="progressbar" style="width:0%;border-bottom:0.5rem solid #053B5E;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" data-target="dropzones--entities--upload.progressUploadReceiptBar-${index}"></div>
+                  <td col-md-1 style="font-size:80%;">${spanError}</td>
+                  
+                  <td col-md-4 style="font-size:80%;">
+                    <span class="text-bold justify" data-target="dropzones--entities--upload.spanName-${index}">${name}</span>
+                    <input autofocus data-field="order" data-action="keyup->dropzones--entities--upload#saveFileName change->dropzones--entities--upload#saveFileName blur->dropzones--entities--upload#saveFileName" class="form-control textarea p-1 s-title-0p85rem d-none" type="string" required data-target="dropzones--entities--upload.inputName-${index}">
+                  </td>
+                  
+                  <td col-md-1 style="font-size:80%;">
+                    <button type="button" class="btn btn-sm btn-table p-0" data-toggle="tooltip" data-placement="top" title data-original-title="Editar nome" data-target="dropzones--entities--upload.buttonDisable" data-action="click->dropzones--entities--upload#editFileName">
+                      <span class="material-icons md-sm md-dark" data-target="dropzones--entities--upload.spanEdit-${index}">edit</span>
+                      <span class="material-icons md-sm md-dark d-none" data-target="dropzones--entities--upload.spanSave-${index}">save</span>
+                    </button>
+                  </td>
+                  
+                  <td col-md-1 style="font-size:80%;">${size}</td>
+                  
+                  <td col-md-1 style="font-size:80%;">.${type}</td>
+                  
+                  <td>
+                    <div class="form-group form-valid-group my-0 text-center">
+                      <span class="fileNameForm" class="mx-2"></span>
+                      <h7 class="progress">
+                        <span class="progress_count"></span>
+                      </h7>
+                      <div class="progress" style="height: 6px;overflow: inherit;" data-target="dropzones--entities--upload.progressUploadReceipt">
+                        <div class="progress-bar" role="progressbar" style="width:0%;border-bottom:0.5rem solid #053B5E;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" data-target="dropzones--entities--upload.progressUploadReceiptBar-${index}"></div>
+                      </div>
+                      <span data-target="dropzones--entities--upload.progressUploadReceiptCounter-${index}" class="d-block"></span>
                     </div>
-                    <span data-target="dropzones--entities--upload.progressUploadReceiptCounter-${index}" class="d-block"></span>
-                  </div>
-                </td>
-                
-                <td id="${index}" col-md-1 style="font-size:80%;"><button type="button" class="btn btn-sm btn-table p-0" data-toggle="tooltip" data-placement="top" title data-original-title="Apagar arquivo" data-target="dropzones--entities--upload.buttonDisable" data-action="click->dropzones--entities--upload#deleteFile"><span class="material-icons md-sm md-dark">delete</span></button></td>
-              </tr>`
+                  </td>
+                  
+                  <td id="${index}" col-md-1 style="font-size:80%;">
+                    <button type="button" class="btn btn-sm btn-table p-0" data-toggle="tooltip" data-placement="top" title data-original-title="Apagar arquivo" data-target="dropzones--entities--upload.buttonDisable" data-action="click->dropzones--entities--upload#deleteFile"><span class="material-icons md-sm md-dark">delete</span></button>
+                  </td>
+                </tr>`
 
-      this.tableBodyTarget.insertAdjacentHTML("beforeend", html)
-    });
+        this.tableBodyTarget.insertAdjacentHTML("beforeend", html)
+      });
 
-    this.getControllerByIdentifier("app--helpers--elements").tooltip()
+      this.getControllerByIdentifier("app--helpers--elements").tooltip()
+    }
 
   }
 
-  editUnit(ev) {
+  // END INSERT FILES IN THE TABLE
 
-    ev.target.innerHTML = ``
-    ev.target.innerHTML = `<span class="material-icons md-sm md-dark" data-target="dropzones--entities--upload.spanEdit-${"0"}">save</span>`
+  // START EDIT FILE NAME
 
-    var span = ev.target.parentElement.parentElement.previousElementSibling.childNodes[0]
-    var input = ev.target.parentElement.parentElement.previousElementSibling.childNodes[1]
+  editFileName(ev) { // EDIT BUTTON DATA-ACTION
+    var index = ev.currentTarget.parentElement.parentElement.id
+
+    this.nameTarget(`spanEdit-${index}`).classList.add("d-none")
+    this.nameTarget(`spanSave-${index}`).classList.remove("d-none")
+
+    var span = this.nameTarget(`spanName-${index}`)
+    var input = this.nameTarget(`inputName-${index}`)
     span.classList.add("d-none")
     input.classList.remove("d-none")
     input.value = span.innerText
     input.focus()
   }
 
-  saveUnit(ev) {
-    var index = ev.target.parentElement.parentElement.id
-    var span = ev.target.previousElementSibling
-    var input = ev.target
+  saveFileName(ev) { // SAVE BUTTON DATA-ACTION
+    var index = ev.currentTarget.parentElement.parentElement.id
 
-    this.nameTarget(`spanEdit-${index}`).innerHTML = ``
-    this.nameTarget(`spanEdit-${index}`).innerHTML = `<span class="material-icons md-sm md-dark" data-target="dropzones--entities--upload.spanEdit-${index}">edit</span>`
+    var span = this.nameTarget(`spanName-${index}`)
+    var input = this.nameTarget(`inputName-${index}`)
 
     if ((ev.type == "keyup" && ev.key == "Escape" && ev.shiftKey == false)) {
       span.classList.remove("d-none")
@@ -237,12 +282,18 @@ export default class extends Controller {
       input.classList.add("d-none")
       if (value != span.innerText && value != "") {
         this.filesNames[index] = value
-        this.bindOutput(span, field, value)
+        this.bindOutput(span, field, value, index)
+      } else {
+        this.nameTarget(`spanSave-${index}`).classList.add("d-none")
+        this.nameTarget(`spanEdit-${index}`).classList.remove("d-none")
       }
     }
   }
 
-  bindOutput(span, field, value) {
+  bindOutput(span, field, value, index) { // REPLACE NEW FILE NAME
+    this.nameTarget(`spanSave-${index}`).classList.add("d-none")
+    this.nameTarget(`spanEdit-${index}`).classList.remove("d-none")
+
     if (field == "order") {
       span.innerText = value
     } else {
@@ -250,7 +301,11 @@ export default class extends Controller {
     }
   }
 
-  deleteFile(ev) {
+  // END EDIT FILE NAME
+
+  // START REMOVE LINE FROM THE TABLE
+
+  deleteFile(ev) { // REMOVE BUTTON DATA-ACTION
     if (ev.type == "click") {
     var index = ev.target.parentElement.parentElement.id
     } else {
@@ -258,17 +313,23 @@ export default class extends Controller {
     }
     if (index > -1) {
       this.files.splice(index, 1)
+      this.filesNames.splice(index, 1)
+      this.canUpload.splice(index, 1)
     }
     
-    this.doBodyHtml()
+    this.doBodyTableHtml()
   }
 
+  // END REMOVE LINE FROM THE TABLE
+
+  // START UPLOAD TO SERVER
+
   saveUploads() {
-    this.disableBtns()
+    this.disableButtons()
     this.fetchFiles()
   }
 
-  disableBtns() {
+  disableButtons() { // DONT ALLOW USER TO PRESS BUTTON WHILE UPLOADING TO SERVER
     this.buttonDisableTargets.forEach(element => {
       element.children[0].style.color = "#fbfcff"
       element.children[0].classList.remove("md-dark")
@@ -276,60 +337,85 @@ export default class extends Controller {
     });
   }
 
-  fetchFiles() {
-    if (this.canUpload[this.indexFetch]) {
-      this.progressCount(0, this.indexFetch)
-      var file = this.files[this.indexFetch]
-      var name = this.filesNames[this.indexFetch]
-      var data = { upload: { file: file, name: name } }
-      const token = $('meta[name=csrf-token]').attr('content');
-      const url = "/dropzones/entities/upload"
-      const init = { method: "POST", credentials: "same-origin", headers: { "X-CSRF-Token": token, 'Content-Type': 'application/json' }, body: JSON.stringify(data) }
-      var controller = this
-      fetch(url, init)
-        .then(response => response.json())
-        .then(response => {
-          if (response.save) {
-            if (controller.indexFetch == controller.files.length - 1) {
-              controller.progressCount(100, controller.indexFetch)
-              controller.stopRefreshing()
-                // controller.nameTarget(`tableRow-${controller.indexFetch}`).remove()
-              controller.filesUploadeds.push(controller.indexFetch)
-              controller.removeFilesAfterUploads()
-              controller.enableBtns()
-              console.log("ultimo arquivo upado")
-              
-            } else {
-              controller.progressCount(100, controller.indexFetch)
-              controller.stopRefreshing()
-              // controller.nameTarget(`tableRow-${controller.indexFetch}`).remove()
-              controller.filesUploadeds.push(controller.indexFetch)
-              controller.indexFetch++
-              controller.fetchFiles()
-            }
-          } else {
-            console.log("nao consegui salvar o arquivo")
-            if (conroller.indexFetch == controller.files.length - 1) {
-              controller.enableBtns()
-              controller.removeFilesAfterUploads()
-              console.log("ultimo arquivo upado")
-            }
-          }
-        })
+  fetchFiles() { 
+    
+    // USE THIS TO COMPARE SERVER SIDE LOG AND CLIENT LOG UPLOADS AND NAMES
+    // console.log(this.indexFetch)
+    // console.log(this.files[this.indexFetch])
+    // console.log(this.filesNames[this.indexFetch])
 
-    } else {
-      if (this.indexFetch == this.files.length - 1) {
-        this.removeFilesAfterUploads()
-        this.enableBtns()
-        console.log("ultimo arquivo upado")
-      } else {
-        this.indexFetch++
-        this.fetchFiles()
+    // if (!this.alreadyUploaded[this.indexFetch]) {
+
+      if (this.canUpload[this.indexFetch]) { // IF FILE IN INDEXFETCH POSITION LESS THAN 5 MB AND THE EXTENSION IS ALLOWED
+        this.progressCount(0, this.indexFetch) // START COUNT
+        
+        var file = this.files[this.indexFetch]  
+        var name = this.filesNames[this.indexFetch] 
+        var data = { upload: { file: file, name: name } } // SET DATA
+        
+        const token = $('meta[name=csrf-token]').attr('content');
+        const url = "/dropzones/entities/upload"
+        const init = { method: "POST", credentials: "same-origin", headers: { "X-CSRF-Token": token, 'Content-Type': 'application/json' }, body: JSON.stringify(data) }
+        
+        var controller = this
+        
+        fetch(url, init)
+          .then(response => response.json())
+          .then(response => {
+            if (response.save) {
+              if (controller.indexFetch == controller.files.length - 1) { // LAST FILE FROM THE TABLE, LAST FETCH, NEED TO RESET SOME THINGS
+                
+                controller.progressCount(100, controller.indexFetch) // PROGRESS BAR TO 100%
+                controller.stopRefreshing() 
+                controller.alreadyUploaded[controller.indexFetch] = true
+                controller.filesUploadeds.push(controller.indexFetch) // ADD FILE DO UPLOADED ARRAY
+                
+                controller.resetAfterUpload() // RESET SOME THINGS
+
+              } else { // ANOTHER FILE BUT NOT THE LAST IN THE TABLE
+                
+                controller.progressCount(100, controller.indexFetch) // PROGRESS BAR TO 100%
+                controller.stopRefreshing()
+                controller.alreadyUploaded[controller.indexFetch] = true
+                controller.filesUploadeds.push(controller.indexFetch) // ADD FILE DO UPLOADED ARRAY
+                controller.indexFetch++ // RECURSIVE FETCH NEED INCREASE INDEX
+                controller.fetchFiles() // RECURSIVE CALL
+
+              }
+            } else {
+              console.log("nao consegui salvar o arquivo")
+              if (conroller.indexFetch == controller.files.length - 1) { // LAST FILE FROM THE TABLE, LAST FETCH, NEED TO RESET SOME THINGS
+                
+                controller.resetAfterUpload() // RESET SOME THINGS
+
+              }
+            }
+          })
+
+      } else { // FILE GREATER THAN 5 MB OR EXTENSION UNPERMITTED
+        if (this.indexFetch == this.files.length - 1) { // LAST FILE FROM THE TABLE, LAST FETCH, NEED TO RESET SOME THINGS
+          
+          this.resetAfterUpload() // RESET SOME THINGS
+          
+        } else { // ANOTHER FILE BUT NOT THE LAST IN THE TABLE
+
+          this.indexFetch++ // RECURSIVE FETCH NEED INCREASE INDEX
+          this.fetchFiles() // RECURSIVE CALL
+
+        }
       }
-    }
+    // }
   }
 
-  enableBtns() {
+  resetAfterUpload() {
+    this.removeFilesAfterUploads() // REMOVE UPLOADED FILES FROM TABLE
+    this.enableBtns() // ENABLE EDIT AND DELETE BUTTONS
+    this.indexFetch = 0 // RESET INDEXFETCH
+    this.filesUploadeds = [] // RESET LIST OF UPLOADED FILES
+    console.log("ultimo arquivo upado")   
+  }
+
+  enableBtns() { // WHEN UPLOADS END ALLOW USER TO PRESS BUTTON 
     this.buttonDisableTargets.forEach(element => {
       element.children[0].classList.add("md-dark")
       element.children[0].style.color = "#fbfcff"
@@ -337,13 +423,13 @@ export default class extends Controller {
     });
   }
 
-  removeFilesAfterUploads() {
+  removeFilesAfterUploads() { // REMOVE LOADED FILES FROM THE TABLE AFTER UPLOAD
     for (var i = this.filesUploadeds.length - 1; i >= 0; i--) {
       this.deleteFile(this.filesUploadeds[i])
     }
   }
 
-  progressCount(value, index) {
+  progressCount(value, index) { // FAKE COUNTER PROGRESS
     var controller = this
     this.nameTarget(`progressUploadReceiptBar-${index}`).style.width = value + `%`
     var i = 0
@@ -356,6 +442,9 @@ export default class extends Controller {
           i = 94
         }
       }, 500);
+    } else {
+      this.stopRefreshing()
+      this.nameTarget(`progressUploadReceiptCounter-${index}`).innerText = value + `%`
     }
   }
 
@@ -364,6 +453,10 @@ export default class extends Controller {
       clearInterval(this.progressTimer)
     }
   }
+
+  // END UPLOAD TO SERVER
+
+  // START COMMON FUNCTIONS
 
   nameTarget(target) {
     return this.targets.find(target)
@@ -374,5 +467,8 @@ export default class extends Controller {
       return controller.context.identifier === identifier;
     });
   }
+
+  // END COMMON FUNCTIONS
+
 
 }
