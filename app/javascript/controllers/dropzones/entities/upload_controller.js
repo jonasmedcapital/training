@@ -385,7 +385,11 @@ export default class extends Controller {
     // console.log(this.files[this.indexFetch])
     // console.log(this.filesNames[this.indexFetch])
 
-    if (this.canUpload[this.indexFetch]) { // IF FILE IN INDEXFETCH POSITION LESS THAN 5 MB AND THE EXTENSION IS ALLOWED
+    if (this.files.length - this.indexFetch == 0) {
+
+      console.log("Não temos arquivos para subir")
+
+    } else if (this.canUpload[this.indexFetch]) { // IF FILE IN INDEXFETCH POSITION LESS THAN 5 MB AND THE EXTENSION IS ALLOWED
       this.progressCount(0, this.indexFetch) // START COUNT
       
       var file = this.files[this.indexFetch]  
