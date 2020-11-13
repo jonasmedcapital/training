@@ -1,7 +1,7 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["uploadCol", "showCol", "tableBody", "saveBtn", "tableRow", "uploadReceipt", "labelUploadReceipt", "fileNameReceipt", "progressUploadReceipt", "progressUploadReceiptBar", "progressUploadReceiptCounter", "buttonDisable", "spanEdit", "spanSave", "inputName", "spanName"]
+  static targets = ["uploadCol", "showCol", "tableBody", "saveBtn", "tableRow", "uploadReceipt", "labelUploadReceipt", "fileNameReceipt", "progressUploadReceipt", "progressUploadReceiptBar", "progressUploadReceiptCounter", "buttonDisable", "spanEdit", "spanSave", "inputName", "spanName", "buttonRemove" ]
 
   connect() {
     console.log("Hello From Dropzone Controller")
@@ -12,7 +12,6 @@ export default class extends Controller {
     this.canUpload = [] // ARRAY THAT DETERMINES IF THE FILES CAN BE LOADED
     this.alreadyUploaded = [] // ARRAY WITH WITH UPLOADED FLAG
     
-    this.filesUploadeds = [] // ARRAY WITH THE INDEXES OF UPLOADED FILES
     this.filesPermittedTypes = ["pdf", "png", "jpeg", ".xlsx", ".docx", ".txt", "PDF", "PNG", "JPEG", ".XLSX", ".DOCX", ".TXT"] // DEFINE ALLOWED EXTENSIONS
     this.indexFetch = 0 // INDEX TO INCREASE IN THE FETCH RECURSIVE CALL
     this.doUploadColumnHtml() 
@@ -169,7 +168,7 @@ export default class extends Controller {
         } else {
           var tableRow = `<tr id="${index}" data-target="dropzones--entities--upload.tableRow-${index}" class="itemRow">`
         }
-        
+       
         var erro = ""
 
         // FILE SIZE AND EXTENSION VALIDATION
@@ -201,44 +200,82 @@ export default class extends Controller {
 
         var type = element.name.substr(element.name.lastIndexOf('.') + 1) // GET ONLY EXTENSION
 
-        // MOUNT TABLE ROW
-        html = `${tableRow}
+        if (!controller.alreadyUploaded[index]) {
 
-                  <td col-md-1 style="font-size:80%;">${spanError}</td>
-                  
-                  <td col-md-4 style="font-size:80%;">
-                    <span class="text-bold justify" data-target="dropzones--entities--upload.spanName-${index}">${name}</span>
-                    <input autofocus data-field="order" data-action="keyup->dropzones--entities--upload#saveFileName change->dropzones--entities--upload#saveFileName blur->dropzones--entities--upload#saveFileName" class="form-control textarea p-1 s-title-0p85rem d-none" type="string" required data-target="dropzones--entities--upload.inputName-${index}">
-                  </td>
-                  
-                  <td col-md-1 style="font-size:80%;">
-                    <button type="button" class="btn btn-sm btn-table p-0" data-toggle="tooltip" data-placement="top" title data-original-title="Editar nome" data-target="dropzones--entities--upload.buttonDisable" data-action="click->dropzones--entities--upload#editFileName">
-                      <span class="material-icons md-sm md-dark" data-target="dropzones--entities--upload.spanEdit-${index}">edit</span>
-                      <span class="material-icons md-sm md-dark d-none" data-target="dropzones--entities--upload.spanSave-${index}">save</span>
-                    </button>
-                  </td>
-                  
-                  <td col-md-1 style="font-size:80%;">${size}</td>
-                  
-                  <td col-md-1 style="font-size:80%;">.${type}</td>
-                  
-                  <td>
-                    <div class="form-group form-valid-group my-0 text-center">
-                      <span class="fileNameForm" class="mx-2"></span>
-                      <h7 class="progress">
-                        <span class="progress_count"></span>
-                      </h7>
-                      <div class="progress" style="height: 6px;overflow: inherit;" data-target="dropzones--entities--upload.progressUploadReceipt">
-                        <div class="progress-bar" role="progressbar" style="width:0%;border-bottom:0.5rem solid #053B5E;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" data-target="dropzones--entities--upload.progressUploadReceiptBar-${index}"></div>
+          // MOUNT TABLE ROW
+          html = `${tableRow}
+
+                    <td col-md-1 style="font-size:80%;">${spanError}</td>
+                    
+                    <td col-md-4 style="font-size:80%;">
+                      <span class="text-bold justify" data-target="dropzones--entities--upload.spanName-${index}">${name}</span>
+                      <input autofocus data-field="order" data-action="keyup->dropzones--entities--upload#saveFileName change->dropzones--entities--upload#saveFileName blur->dropzones--entities--upload#saveFileName" class="form-control textarea p-1 s-title-0p85rem d-none" type="string" required data-target="dropzones--entities--upload.inputName-${index}">
+                    </td>
+                    
+                    <td col-md-1 style="font-size:80%;">
+                      <button type="button" class="btn btn-sm btn-table p-0" data-toggle="tooltip" data-placement="top" title data-original-title="Editar nome" data-target="dropzones--entities--upload.buttonDisable dropzones--entities--upload.buttonRemove-${index}" data-action="click->dropzones--entities--upload#editFileName">
+                        <span class="material-icons md-sm md-dark" data-target="dropzones--entities--upload.spanEdit-${index}">edit</span>
+                        <span class="material-icons md-sm md-dark d-none" data-target="dropzones--entities--upload.spanSave-${index}">save</span>
+                      </button>
+                    </td>
+                    
+                    <td col-md-1 style="font-size:80%;">${size}</td>
+                    
+                    <td col-md-1 style="font-size:80%;">.${type}</td>
+                    
+                    <td>
+                      <div class="form-group form-valid-group my-0 text-center">
+                        <span class="fileNameForm" class="mx-2"></span>
+                        <h7 class="progress">
+                          <span class="progress_count"></span>
+                        </h7>
+                        <div class="progress" style="height: 6px;overflow: inherit;" data-target="dropzones--entities--upload.progressUploadReceipt">
+                          <div class="progress-bar" role="progressbar" style="width:0%;border-bottom:0.5rem solid #053B5E;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" data-target="dropzones--entities--upload.progressUploadReceiptBar-${index}"></div>
+                        </div>
+                        <span data-target="dropzones--entities--upload.progressUploadReceiptCounter-${index}" class="d-block"></span>
                       </div>
-                      <span data-target="dropzones--entities--upload.progressUploadReceiptCounter-${index}" class="d-block"></span>
-                    </div>
-                  </td>
-                  
-                  <td id="${index}" col-md-1 style="font-size:80%;">
-                    <button type="button" class="btn btn-sm btn-table p-0" data-toggle="tooltip" data-placement="top" title data-original-title="Apagar arquivo" data-target="dropzones--entities--upload.buttonDisable" data-action="click->dropzones--entities--upload#deleteFile"><span class="material-icons md-sm md-dark">delete</span></button>
-                  </td>
-                </tr>`
+                    </td>
+                    
+                    <td id="${index}" col-md-1 style="font-size:80%;">
+                      <button type="button" class="btn btn-sm btn-table p-0" data-toggle="tooltip" data-placement="top" title data-original-title="Apagar arquivo" data-target="dropzones--entities--upload.buttonDisable dropzones--entities--upload.buttonRemove-${index}" data-action="click->dropzones--entities--upload#deleteFile"><span class="material-icons md-sm md-dark">delete</span></button>
+                    </td>
+                  </tr>`
+
+        } else {
+          html = `${tableRow}
+
+                    <td col-md-1 style="font-size:80%;">${spanError}</td>
+                    
+                    <td col-md-4 style="font-size:80%;">
+                      <span class="text-bold justify" data-target="dropzones--entities--upload.spanName-${index}">${name}</span>
+                      <input autofocus data-field="order" data-action="keyup->dropzones--entities--upload#saveFileName change->dropzones--entities--upload#saveFileName blur->dropzones--entities--upload#saveFileName" class="form-control textarea p-1 s-title-0p85rem d-none" type="string" required data-target="dropzones--entities--upload.inputName-${index}">
+                    </td>
+                    
+                    <td col-md-1 style="font-size:80%;">
+                    </td>
+                    
+                    <td col-md-1 style="font-size:80%;">${size}</td>
+                    
+                    <td col-md-1 style="font-size:80%;">.${type}</td>
+                    
+                    <td>
+                      <div class="form-group form-valid-group my-0 text-center">
+                        <span class="fileNameForm" class="mx-2"></span>
+                        <h7 class="progress">
+                          <span class="progress_count"></span>
+                        </h7>
+                        <div class="progress" style="height: 6px;overflow: inherit;" data-target="dropzones--entities--upload.progressUploadReceipt">
+                          <div class="progress-bar" role="progressbar" style="width:100%;border-bottom:0.5rem solid #053B5E;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" data-target="dropzones--entities--upload.progressUploadReceiptBar-${index}"></div>
+                        </div>
+                        <span data-target="dropzones--entities--upload.progressUploadReceiptCounter-${index}" class="d-block">100%</span>
+                      </div>
+                    </td>
+                    
+                    <td id="${index}" col-md-1 style="font-size:80%;">
+                    </td>
+                  </tr>`
+
+                }
 
         this.tableBodyTarget.insertAdjacentHTML("beforeend", html)
       });
@@ -344,89 +381,81 @@ export default class extends Controller {
     // console.log(this.files[this.indexFetch])
     // console.log(this.filesNames[this.indexFetch])
 
-    // if (!this.alreadyUploaded[this.indexFetch]) {
+    if (this.canUpload[this.indexFetch]) { // IF FILE IN INDEXFETCH POSITION LESS THAN 5 MB AND THE EXTENSION IS ALLOWED
+      this.progressCount(0, this.indexFetch) // START COUNT
+      
+      var file = this.files[this.indexFetch]  
+      var name = this.filesNames[this.indexFetch] 
+      var data = { upload: { file: file, name: name } } // SET DATA
+      
+      const token = $('meta[name=csrf-token]').attr('content');
+      const url = "/dropzones/entities/upload"
+      const init = { method: "POST", credentials: "same-origin", headers: { "X-CSRF-Token": token, 'Content-Type': 'application/json' }, body: JSON.stringify(data) }
+      
+      var controller = this
+      
+      fetch(url, init)
+        .then(response => response.json())
+        .then(response => {
+          if (response.save) {
+            if (controller.indexFetch == controller.files.length - 1) { // LAST FILE FROM THE TABLE, LAST FETCH, NEED TO RESET SOME THINGS
+              
+              controller.tagUploadedFiles() // SET UPLOADED FLAG TRUE AND PROGRESS BAR TO 100%
 
-      if (this.canUpload[this.indexFetch]) { // IF FILE IN INDEXFETCH POSITION LESS THAN 5 MB AND THE EXTENSION IS ALLOWED
-        this.progressCount(0, this.indexFetch) // START COUNT
-        
-        var file = this.files[this.indexFetch]  
-        var name = this.filesNames[this.indexFetch] 
-        var data = { upload: { file: file, name: name } } // SET DATA
-        
-        const token = $('meta[name=csrf-token]').attr('content');
-        const url = "/dropzones/entities/upload"
-        const init = { method: "POST", credentials: "same-origin", headers: { "X-CSRF-Token": token, 'Content-Type': 'application/json' }, body: JSON.stringify(data) }
-        
-        var controller = this
-        
-        fetch(url, init)
-          .then(response => response.json())
-          .then(response => {
-            if (response.save) {
-              if (controller.indexFetch == controller.files.length - 1) { // LAST FILE FROM THE TABLE, LAST FETCH, NEED TO RESET SOME THINGS
-                
-                controller.progressCount(100, controller.indexFetch) // PROGRESS BAR TO 100%
-                controller.stopRefreshing() 
-                controller.alreadyUploaded[controller.indexFetch] = true
-                controller.filesUploadeds.push(controller.indexFetch) // ADD FILE DO UPLOADED ARRAY
-                
-                controller.resetAfterUpload() // RESET SOME THINGS
+              controller.resetAfterUpload() // RESET SOME THINGS
 
-              } else { // ANOTHER FILE BUT NOT THE LAST IN THE TABLE
-                
-                controller.progressCount(100, controller.indexFetch) // PROGRESS BAR TO 100%
-                controller.stopRefreshing()
-                controller.alreadyUploaded[controller.indexFetch] = true
-                controller.filesUploadeds.push(controller.indexFetch) // ADD FILE DO UPLOADED ARRAY
-                controller.indexFetch++ // RECURSIVE FETCH NEED INCREASE INDEX
-                controller.fetchFiles() // RECURSIVE CALL
+            } else { // ANOTHER FILE BUT NOT THE LAST IN THE TABLE
+              
+              controller.tagUploadedFiles() // SET UPLOADED FLAG TRUE AND PROGRESS BAR TO 100%
 
-              }
-            } else {
-              console.log("nao consegui salvar o arquivo")
-              if (conroller.indexFetch == controller.files.length - 1) { // LAST FILE FROM THE TABLE, LAST FETCH, NEED TO RESET SOME THINGS
-                
-                controller.resetAfterUpload() // RESET SOME THINGS
+              controller.indexFetch++ // RECURSIVE FETCH NEED INCREASE INDEX
+              controller.fetchFiles() // RECURSIVE CALL
 
-              }
             }
-          })
+          } else {
+            console.log("nao consegui salvar o arquivo")
+            if (conroller.indexFetch == controller.files.length - 1) { // LAST FILE FROM THE TABLE, LAST FETCH, NEED TO RESET SOME THINGS
+              
+              controller.resetAfterUpload() // RESET SOME THINGS
 
-      } else { // FILE GREATER THAN 5 MB OR EXTENSION UNPERMITTED
-        if (this.indexFetch == this.files.length - 1) { // LAST FILE FROM THE TABLE, LAST FETCH, NEED TO RESET SOME THINGS
-          
-          this.resetAfterUpload() // RESET SOME THINGS
-          
-        } else { // ANOTHER FILE BUT NOT THE LAST IN THE TABLE
+            }
+          }
+        })
 
-          this.indexFetch++ // RECURSIVE FETCH NEED INCREASE INDEX
-          this.fetchFiles() // RECURSIVE CALL
+    } else { // FILE GREATER THAN 5 MB OR EXTENSION UNPERMITTED
+      if (this.indexFetch == this.files.length - 1) { // LAST FILE FROM THE TABLE, LAST FETCH, NEED TO RESET SOME THINGS
+        
+        this.resetAfterUpload() // RESET SOME THINGS
+        
+      } else { // ANOTHER FILE BUT NOT THE LAST IN THE TABLE
 
-        }
+        this.indexFetch++ // RECURSIVE FETCH NEED INCREASE INDEX
+        this.fetchFiles() // RECURSIVE CALL
+
       }
-    // }
+    }
+  }
+
+  tagUploadedFiles() { // SET UPLOADED FLAG TRUE AND PROGRESS BAR TO 100%
+    this.nameTarget(`buttonRemove-${this.indexFetch}`).remove()
+    this.nameTarget(`buttonRemove-${this.indexFetch}`).remove()
+    this.progressCount(100, this.indexFetch) // PROGRESS BAR TO 100%
+    this.stopRefreshing()
+    this.alreadyUploaded[this.indexFetch] = true
   }
 
   resetAfterUpload() {
-    this.removeFilesAfterUploads() // REMOVE UPLOADED FILES FROM TABLE
-    this.enableBtns() // ENABLE EDIT AND DELETE BUTTONS
-    this.indexFetch = 0 // RESET INDEXFETCH
-    this.filesUploadeds = [] // RESET LIST OF UPLOADED FILES
+    this.enableButtons() // ENABLE EDIT AND DELETE BUTTONS
+    this.indexFetch++ // INCREASE TO NEW UPLOAD
     console.log("ultimo arquivo upado")   
   }
 
-  enableBtns() { // WHEN UPLOADS END ALLOW USER TO PRESS BUTTON 
+  enableButtons() { // WHEN UPLOADS END ALLOW USER TO PRESS BUTTON 
     this.buttonDisableTargets.forEach(element => {
       element.children[0].classList.add("md-dark")
       element.children[0].style.color = "#fbfcff"
       element.disabled = false
     });
-  }
-
-  removeFilesAfterUploads() { // REMOVE LOADED FILES FROM THE TABLE AFTER UPLOAD
-    for (var i = this.filesUploadeds.length - 1; i >= 0; i--) {
-      this.deleteFile(this.filesUploadeds[i])
-    }
   }
 
   progressCount(value, index) { // FAKE COUNTER PROGRESS
