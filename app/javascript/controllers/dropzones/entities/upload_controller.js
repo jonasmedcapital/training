@@ -96,8 +96,10 @@ export default class extends Controller {
             
             for (var j = 0; j < this.files.length; j++) {
               if (this.files[j].name == file.name) {
-                this.found = true // DETECTED FILES WITH THE SAME NAME
-                break
+                if (this.files[j].size == file.size) {
+                  this.found = true // DETECTED FILES WITH THE SAME NAME
+                  break
+                }
               }
             }
             
@@ -119,8 +121,10 @@ export default class extends Controller {
         
         for (var j = 0; j < this.files.length; j++) {
           if (this.files[j].name == ev.target.files[i].name) {
-            this.found = true // DETECTED FILES WITH THE SAME NAME
-            break
+            if (this.files[j].size == ev.target.files[i].size) {
+              this.found = true // DETECTED FILES WITH THE SAME NAME
+              break
+            }
           }
         }
 
