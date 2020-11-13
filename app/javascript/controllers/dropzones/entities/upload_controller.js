@@ -356,8 +356,10 @@ export default class extends Controller {
       this.files.splice(index, 1)
       this.filesNames.splice(index, 1)
       this.canUpload.splice(index, 1)
+      this.alreadyUploaded.splice(index, 1)
     }
     
+    this.indexFetch--
     this.doBodyTableHtml()
   }
 
@@ -388,6 +390,7 @@ export default class extends Controller {
     if (this.files.length - this.indexFetch == 0) {
 
       console.log("Não temos arquivos para subir")
+      this.enableButtons()
 
     } else if (this.canUpload[this.indexFetch]) { // IF FILE IN INDEXFETCH POSITION LESS THAN 5 MB AND THE EXTENSION IS ALLOWED
       this.progressCount(0, this.indexFetch) // START COUNT
