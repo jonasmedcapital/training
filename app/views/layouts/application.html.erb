@@ -26,20 +26,20 @@
 <body>
 
   <% if current_user %>
+  <div>
+    <%= render 'layouts/helpers' %>
+  </div>
+  <%= render 'layouts/nav' %>
+  <div class="container">
+    <%= yield %>
+  </div>
+  <% else %>
+  <div class="container-site" style="height:100%;overflow: scroll;">
     <div>
       <%= render 'layouts/helpers' %>
     </div>
-    <%= render 'layouts/nav' %>
-    <div class="container">
-      <%= yield %>
-    </div>
-  <% else %>
-    <div class="container-site" style="height:100%;overflow: scroll;">
-      <div>
-        <%= render 'layouts/helpers' %>
-      </div>
-      <%= yield %>
-    </div>
+    <%= yield %>
+  </div>
   <% end %>
 
 </body>

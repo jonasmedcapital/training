@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     resources :trainings, only: [:index, :show], path: '/treinamentos', controller: 'web/trainings/entities'
     resources :uploads, only: [:index, :show], path: '/uploads', controller: 'web/uploads/entities'
     resources :dropzones, only: [:index, :show], path: '/dropzones', controller: 'web/dropzones/entities'
+    resources :printings, only: [:index, :show], path: '/printings', controller: 'web/printings/entities'
   end
 
   get "/treinamentos/:id", to: "web/trainings/entities#public_show"
