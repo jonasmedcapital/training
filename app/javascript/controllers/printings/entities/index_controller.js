@@ -49,7 +49,6 @@ export default class extends Controller {
                     <style type="text/css"><!--.tab20 { margin-left: 20px; }--></style>
                     <style type="text/css"><!--.tab40 { margin-left: 40px; }--></style>
                     
-
                     <div class="row my-1">
                       <div class="col-12">
                         <table class="table table-sm table-borderless" style="font-size:80%;">
@@ -70,6 +69,8 @@ export default class extends Controller {
                             <tr>
                               <td colspan="10" class="f-065 align-middle px-0 text-left">
 
+                                <p style="text-align:right;"><img id="print-element" src="https://medcapital.s3-sa-east-1.amazonaws.com/images/logo/logomarca-medcapital.png" width="200" height="35"></p>
+                                
                                 <p style="text-align:center;"><b>CONTRATO DE PRESTAÇÃO DE SERVIÇOS PROFISSIONAIS</b></p>
 
                                 <p><b>CONTRATANTE:</b> ${this.dataContract.contractorName}, CPF nº ${this.dataContract.contractorCpf}, residente e domiciliado na ${this.dataContract.contractorAddress}, nº ${this.dataContract.contractorAddressNumber}, ${this.dataContract.contractorAddressComplement}, bairro ${this.dataContract.contractorAddressDistrict}, cidade de ${this.dataContract.contractorAddressCity}, Estado ${this.dataContract.contractorAddressState}, CEP ${this.dataContract.contractorAddressPostalCode}, E-mail ${this.dataContract.contractorEmail};</p>
@@ -278,12 +279,14 @@ export default class extends Controller {
   printDiv() {
     
     var divToPrint = document.getElementById('printElement');
-    var newWin = window.open();
-    newWin.document.write(divToPrint.innerHTML);
-    newWin.document.close();
-    newWin.focus();
-    newWin.print();
-    newWin.close();
+    var newWindow = window.open();
+    newWindow.document.write(divToPrint.innerHTML);
+    newWindow.document.close();
+    newWindow.focus();
+    setTimeout(function() {
+      newWindow.print();
+      newWindow.close();
+    }, 250);
     
   }
   
