@@ -1,0 +1,89 @@
+<ol class="breadcrumb py-0" data-target="app--navigation--desktop--breadcrumb.nav"><li class="breadcrumb-item f-075"><a href="/dashboard">Dashboard</a></li><li class="breadcrumb-item f-075"><a href="/a/operacoes">Tracker</a></li><li class="breadcrumb-item f-075 active" aria-current="page" id="breadcrumbName" data-target="app--navigation--desktop--breadcrumb.breadcrumbName">Adicionar Projeto</li></ol>
+
+<div>
+  <div class="row my-3 d-flex align-items-center">
+    <div class="col-sm-8">
+      <div class="media">
+        <i class="material-icons md-lg md-primary mr-2">description</i>
+        <div class="media-body">
+          <h5 class="mt-2 title-h5text">Projetos</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-2 ml-auto"></div>
+    <div class="col-sm-1" data-target="operations--products--bookings--entities--index.submenu">
+      <div class="dropdown" data-toggle="tooltip" data-placement="top" data-original-title="Submenu">
+        <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline my-0" data-toggle="dropdown" id="marketingMenuDrop" type="button"><i class="material-icons">apps</i></button>
+        <div aria-labelledby="marketingMenuDrop" class="dropdown-menu dropdown-menu-right menu" style="font-size:80%">
+          <span data-action="click->operations--products--bookings--entities--submenu#goToDashboard" class="dropdown-item py-1 pointer">Dashboard</span>
+          <span data-action="click->operations--products--bookings--entities--submenu#goToReceipts" class="dropdown-item py-1 pointer">Recibos</span>
+          <span data-action="click->operations--products--bookings--entities--submenu#goToPatients" class="dropdown-item py-1 pointer">Pacientes</span>
+          <span data-action="click->operations--products--bookings--entities--submenu#goToPayments" class="dropdown-item py-1 pointer">Pagamentos</span>
+          <span data-action="click->operations--products--bookings--entities--submenu#goToNotes" class="dropdown-item py-1 pointer">Anotações</span>
+          <span data-action="click->operations--products--bookings--entities--submenu#goToDocuments" class="dropdown-item py-1 pointer">Documentos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mc-card-body" >
+<div class="card-header d-flex align-items-center card-header-table-list f-065">
+  
+  <h4 class="">Novo Projeto</h4>
+  
+</div>
+<div class="card-body py-5  ">
+  <div class="row">
+    <div class="col p-3">
+      <div class="table-flex ">
+
+        <table class="">
+          <tbody class="">
+            <div>
+
+            <div class="py-3 ">
+              <div class="col-10">
+                <div class="form-group form-valid-group">
+                  <div class="floating-label floating-label-sm py-2">
+                    <label for="bankDataInput ">Nome do projeto</label>
+                    <input aria-describedby="bankDataInputHelp" class="form-control form-valid-control" id="bankDataInput" data-filter-mode="simple" data-target="${this.thiscontroller}.bankDataInput" placeholder="Nome inicial do Projeto" type="text" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="py-1">
+              <div class="col-10">
+                <div class="form-group form-valid-group">
+                  <div class="floating-label floating-label-sm py-1">
+                    <label for="bankDataInput ">Data início do projeto</label>
+                    <input aria-describedby="bankDataInputHelp" class="form-control form-valid-control" id="bankDataInput" data-filter-mode="simple" data-target="${this.thiscontroller}.bankDataInput" placeholder="Dados inicial do projeto" type="text" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="py-3">
+              <div class="col-10 d-inline-flex">
+               <i class="material-icons">group</i>
+               <h6 class="ml-2"> Visivel para </h6>
+               <i class="material-icons">expand_more</i>
+              </div>
+            </div>
+
+            </div>
+          </tbody>
+        </table>
+
+        <div class="container py-4">
+        <div class="row">
+            <div class="col-md-12 bg-light text-right">
+                 <button  type="button" class="btn btn-primary btn-sm btn-table f-065 text-align-left">Salvar</button>
+            </div>
+        </div>
+        </div>
+  </div>
+</div>
+</div>
+

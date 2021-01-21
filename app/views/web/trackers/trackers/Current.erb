@@ -1,0 +1,318 @@
+<ol class="breadcrumb py-0" data-target="app--navigation--desktop--breadcrumb.nav"><li class="breadcrumb-item f-075"><a href="/dashboard">Dashboard</a></li><li class="breadcrumb-item f-075"><a href="/a/operacoes">Clinics</a></li> <li class="breadcrumb-item f-075"><a href="/a/operacoes">Current</a></li><li class="breadcrumb-item f-075 active" aria-current="page" id="breadcrumbName" data-target="app--navigation--desktop--breadcrumb.breadcrumbName">Ex de atividade</li></ol>
+
+<div class="py-5 ">
+  <div class="row my-3 d-flex align-items-center">
+    <div class="col-sm-5">
+      <div class="media">
+        <i class="material-icons md-lg md-primary mr-2">description</i>
+        <div class="media-body ml-2">
+          <h4 class="mt-2 title-h5text">Ex de Atividades </h4>
+        </div>
+      </div>
+    </div>  
+
+    <div class="col-sm-0 ml-auto"></div>
+        <div class="col-sm-1" data-target="operations--products--bookings--entities--index.submenu">
+          <div class="dropdown" data-toggle="tooltip" data-placement="top" data-original-title="Submenu">
+            <button aria-expanded="false" aria-haspopup="true" class="btn btn-outline my-0" data-toggle="dropdown" id="marketingMenuDrop" type="button"><i class="material-icons">apps</i></button>
+            <div aria-labelledby="marketingMenuDrop" class="dropdown-menu dropdown-menu-right menu" style="font-size:80%">
+              <span data-action="click->operations--products--bookings--entities--submenu#goToDashboard" class="dropdown-item py-1 pointer">Dashboard</span>
+              <span data-action="click->operations--products--bookings--entities--submenu#goToReceipts" class="dropdown-item py-1 pointer">Recibos</span>
+              <span data-action="click->operations--products--bookings--entities--submenu#goToPatients" class="dropdown-item py-1 pointer">Pacientes</span>
+              <span data-action="click->operations--products--bookings--entities--submenu#goToPayments" class="dropdown-item py-1 pointer">Pagamentos</span>
+              <span data-action="click->operations--products--bookings--entities--submenu#goToNotes" class="dropdown-item py-1 pointer">Anotações</span>
+              <span data-action="click->operations--products--bookings--entities--submenu#goToDocuments" class="dropdown-item py-1 pointer">Documentos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+
+    <div class="col-10 ">
+    <div class="d-flex my-1 ml-1 ">
+
+    <div class="col-3 pl-2 py-3 ">
+      <div class="card border-top-primary">
+        <div class="card-header p-0 py-0 text-center s-title-0p7rem"> 
+          <div class=>
+            <h6 class="m-0">Membros</h6>
+          </div> 
+        </div>
+        <div class="card-body text-center  s-title-0p7rem d-flex">
+        <div class="d-flex">
+          <span class="material-icons  ml-4 mr-3 default " data-toggle="tooltip" data-placement="top" title data-original-title="${member.name}">face</span>     
+          <span class="material-icons mr-3 default " data-toggle="tooltip" data-placement="top" title data-original-title="${member.name}">face</span>          
+          <span class="material-icons mr-3 default " data-toggle="tooltip" data-placement="top" title data-original-title="${member.name}">face</span>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-3 pl-2 py-3 ">
+      <div class="card border-top-primary ">
+        <div class="card-header p-0 py-0 text-center s-title-0p7rem"> 
+          <div class=>
+          <h6 class="m-0">Data Início</h6>
+        </div> 
+        </div>
+        <div class="card-body text-center s-title-0p7rem">
+          <h5>15/01/2021</h5>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-3 pl-2 py-3 ">
+      <div class="card border-top-primary ">
+        <div class="card-header p-0 py-0 text-center s-title-0p7rem"> 
+          <div class=>
+          <h6 class="m-0">Dias Trabalhados</h6>
+        </div>     
+        </div>
+        <div class="card-body text-center s-title-0p7rem">
+          <h5>11 Dias</h5>          
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-3 pl-2 py-3 ">
+      <div class="card border-top-primary ">
+        <div class="card-header p-0 py-0 text-center s-title-0p7rem"> 
+          <div class=>
+          <h6 class="m-0">Tipo</h6>
+        </div> 
+        </div>
+        <div class="card-body text-center s-title-0p7rem">
+          <h5>Release</h5>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-3 pl-2 py-3 ">
+      <div class="card border-top-primary ">
+        <div class="card-header p-0 py-0 text-center s-title-0p7rem"> 
+          <div class=>
+          <h6 class="m-0">Progresso</h6>
+        </div> 
+        </div>
+        <div class="card-body text-center s-title-0p7rem">
+          <h5>85%</h5>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  </div>
+
+  <div class="col-12">
+  <div class="d-flex justify-content-between">
+
+    <div  class="col-8 py-5 ml-2 ">
+
+      <div class="d-flex justify-content-between">
+        <h3 >Atividades</h3>
+        <i class="material-icons ml-5 py-0 ">add</i>
+      </div>
+      <hr style="margin-top:10px;margin-bottom: 25px;">
+
+      <div class="col-12 ml-0 mb-5">
+        <div class="media">
+          <div class="media-body">
+            <input class="form-control s-title-0p7rem w-100 ml-auto input-search-table" id="" placeholder="Buscar ..." type="text">
+          </div>
+        </div>
+      </div>
+
+        <div class="d-flex justify-content-around">
+          <div class="col-4">
+            <h6 class="m-0">To Do</h6>
+            <hr style="margin-top:10px;margin-bottom: 25px; border: 1px solid gray; border-radius: 1px;">
+
+          <div class="card">
+            <div class="card-header p-0 py-0 text-center "> 
+              <div class=>
+              <h6 class="m-0 ml-2 my-1 text-left ml-4">11/06/2021</h6>
+            </div>     
+            </div>
+            <div class="card-body text-center s-title-0p7rem">
+              <p class="text-broken text-left ml-2">Objetivo exemple lorem ipsum lorem ipsum lorem lorem ipsum lorem ipsum lorem lorem  </p>          
+            </div>
+          </div>
+
+          <div class="card my-3">
+            <div class="card-header p-0 py-0 text-center "> 
+              <div class=>
+              <h6 class="m-0 ml-2 my-1 text-left ml-4">10/06/2021</h6>
+            </div>     
+            </div>
+            <div class="card-body text-center s-title-0p7rem">
+              <p class="text-broken text-left ml-2">Objetivo exemple lorem ipsum lorem ipsum lorem lorem ipsum lorem ipsum lorem lorem  </p>          
+            </div>
+          </div>
+
+          <div class="card my-3">
+            <div class="card-header p-0 py-0 text-center "> 
+              <div class=>
+              <h6 class="m-0 ml-2 my-1 text-left ml-4">09/06/2021</h6>
+            </div>     
+            </div>
+            <div class="card-body text-center s-title-0p7rem">
+              <p class="text-broken text-left ml-2">Objetivo exemple lorem ipsum lorem ipsum lorem lorem ipsum lorem ipsum lorem lorem  </p>          
+            </div>
+          </div>
+
+          </div>
+          
+          <div class="col-4">
+            <h6 class="m-0">In Progress</h6>
+            <hr style="margin-top:10px;margin-bottom: 25px; border: 1px solid gray; border-radius: 1px;">
+
+            <div class="card">
+                <div class="card-header p-0 py-0 text-center "> 
+                  <div class=>
+                  <h6 class="m-0 ml-2 my-1 text-left">11/06/2021</h6>
+                </div>     
+                </div>
+                <div class="card-body text-center s-title-0p7rem">
+                  <p class="text-broken text-left ml-2">Objetivo exemple lorem ipsum lorem ipsum lorem lorem ipsum lorem ipsum lorem lorem  </p>          
+                </div>
+              </div>
+
+              <div class="card my-3">
+                <div class="card-header p-0 py-0 text-center "> 
+                  <div class=>
+                  <h6 class="m-0 ml-2 my-1 text-left">10/06/2021</h6>
+                </div>     
+                </div>
+                <div class="card-body text-center s-title-0p7rem">
+                  <p class="text-broken text-left ml-2">Objetivo exemple lorem ipsum lorem ipsum lorem lorem ipsum lorem ipsum lorem lorem  </p>          
+                </div>
+              </div>
+
+              <div class="card my-3">
+                <div class="card-header p-0 py-0 text-center "> 
+                  <div class=>
+                  <h6 class="m-0 ml-2 my-1 text-left">09/06/2021</h6>
+                </div>     
+                </div>
+                <div class="card-body text-center s-title-0p7rem">
+                  <p class="text-broken text-left ml-2">Objetivo exemple lorem ipsum lorem ipsum lorem lorem ipsum lorem ipsum lorem lorem  </p>          
+                </div>
+              </div>
+            
+          </div>
+
+          <div class="col-4">
+            <h6 class="m-0">Done</h6>
+            <hr style="margin-top:10px;margin-bottom: 25px; border: 1px solid green; border-radius: 2px;">
+
+            
+              <div class="card">
+                <div class="card-header p-0 py-0 text-center "> 
+                  <div class=>
+                  <h6 class="m-0 ml-2 my-1 text-left">08/06/2021</h6>
+                </div>     
+                </div>
+                <div class="card-body text-center s-title-0p7rem">
+                  <p class="text-broken text-left ml-2">Objetivo exemple lorem ipsum lorem ipsum lorem lorem ipsum lorem ipsum lorem lorem  </p>          
+                </div>
+              </div>
+
+                <div class="card my-3">
+                <div class="card-header p-0 py-0 text-center s-title-0p7rem"> 
+                  <div class=>
+                  <h6 class="m-0 ml-2 my-1 text-left">07/06/2021</h6>
+                </div>     
+                </div>
+                <div class="card-body text-center s-title-0p7rem">
+                  <p class="text-broken text-left ml-2">Objetivo exemple lorem ipsum lorem ipsum lorem lorem ipsum lorem ipsum lorem lorem  </p>          
+                </div>
+              </div>
+
+              <div class="card my-3">
+                <div class="card-header p-0 py-0 text-center s-title-0p7rem"> 
+                  <div class=>
+                  <h6 class="m-0 ml-2 my-1 text-left">06/06/2021</h6>
+                </div>     
+                </div>
+                <div class="card-body text-center s-title-0p7rem">
+                  <p class="text-broken text-left ml-2">Objetivo exemple lorem ipsum lorem ipsum lorem lorem ipsum lorem ipsum lorem lorem  </p>          
+                </div>
+              </div>
+          
+          </div>
+    
+        </div>
+
+    </div>
+
+    <div  class="col-4 py-5 ml-4">
+      <div class="d-flex justify-content-between">
+        <h3 >Anotações</h3>
+        <i class="material-icons ml-5 py-0 ">add</i>
+      </div>
+      <hr style="margin-top:10px;margin-bottom: 25px;">
+
+      <div class="ml-0 mb-5">
+        <div class="media">
+          <div class="media-body">
+            <input class="form-control s-title-0p7rem w-100 ml-auto input-search-table" id="" placeholder="Buscar ..." type="text">
+          </div>
+        </div>
+      </div>
+
+        <div class="card my-3">
+          <div class="card-header p-0 py-0 text-center s-title-0p7rem"> 
+            <div class=>
+            <h6 class="m-0 ml-2 my-1 text-left ml-4">11/06/2021</h6>
+          </div>     
+          </div>
+          <div class="card-body text-center s-title-0p7rem">
+            <div class="d-flex mb-2">
+              <p class="text-broken text-left ml-2 col-10">Objetivo exemple lorem ipsum lorem ipsum lorem lorem ipsum lorem ipsum lorem lorem </p> 
+              <i class="material-icons ml-3">delete</i>
+            </div>
+            <p class="text-broken text-right  ml-2 d-flex flex-row-reverse">Nota atualizada no dia 22/12/2020 às 18:44:43 por Gustavo Bonfim</p>          
+          </div>
+        </div>
+
+       <div class="card my-3">
+          <div class="card-header p-0 py-0 text-center s-title-0p7rem"> 
+            <div class=>
+            <h6 class="m-0 ml-2 my-1 text-left ml-4">11/06/2021</h6>
+          </div>     
+          </div>
+          <div class="card-body text-center s-title-0p7rem">
+            <div class="d-flex mb-2">
+              <p class="text-broken text-left ml-2 col-10">Objetivo exemple lorem ipsum lorem ipsum lorem lorem ipsum lorem ipsum lorem lorem </p> 
+              <i class="material-icons ml-3">delete</i>
+            </div>
+            <p class="text-broken text-right  ml-2 d-flex flex-row-reverse">Nota atualizada no dia 22/12/2020 às 18:44:43 por Gustavo Bonfim</p>          
+          </div>
+        </div>
+
+        <div class="card my-3">
+          <div class="card-header p-0 py-0 text-center s-title-0p7rem"> 
+            <div class=>
+            <h6 class="m-0 ml-2 my-1 text-left ml-4">11/06/2021</h6>
+          </div>     
+          </div>
+          <div class="card-body text-center s-title-0p7rem">
+            <div class="d-flex mb-2">
+              <p class="text-broken text-left ml-2 col-10">Objetivo exemple lorem ipsum lorem ipsum lorem lorem ipsum lorem ipsum lorem lorem </p> 
+              <i class="material-icons ml-3">delete</i>
+            </div>
+            <p class="text-broken text-right  ml-2 d-flex flex-row-reverse">Nota atualizada no dia 22/12/2020 às 18:44:43 por Gustavo Bonfim</p>          
+          </div>
+        </div>
+          
+    </div>
+ 
+  </div>
+  </div>
+  
+  
+
+                
