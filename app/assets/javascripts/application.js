@@ -18,3 +18,4 @@
 //= require material
 //= require trix
 //= require_tree .
+//= require serviceworker-companion
