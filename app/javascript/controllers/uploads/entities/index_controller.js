@@ -87,6 +87,9 @@ export default class extends Controller {
     this.uploadColTarget.innerHTML = html
   }
 
+  // le o arquivo selecionado no choose file
+  // salva ele no this.csv
+  // chama csv to table
   readSingleFile(ev) {
     //Retrieve the first (and only!) File from the FileList object
     if(this.has_csv) {
@@ -109,6 +112,8 @@ export default class extends Controller {
     }
   }
 
+  // transforma o csv na table html
+  // chama do header e do body table
   csvToTable(csv) {
 
     this.tableLines = csv.split("\n")
@@ -121,6 +126,7 @@ export default class extends Controller {
 
   }
 
+  // constroi o header com a primeira linha do csv
   doHeadTable() {
     var html = `<th>
                 <div class="col">
@@ -138,6 +144,7 @@ export default class extends Controller {
     return html;
   }
 
+  // verifica se o checkbox marcado no header esta vazio nas linhas da tabela
   emptyLineValidate(ev) {
     var controller = this
     for (var r = 1; r < this.tableLinesLength; r++) {
@@ -163,6 +170,7 @@ export default class extends Controller {
     }
   }
 
+  // constroi a tabela com os dados do csv
   doBodyTable() {
     var htmlColumn = ``
     var htmlRow = ``
@@ -205,10 +213,12 @@ export default class extends Controller {
     return htmlRow;
   }
 
+  // remove a linha marcada pelo id
   deleteLine(ev){
     this.nameTarget(`lineCell-${ev.target.parentElement.id}`).remove()
   }
 
+  // edita o valor da celula
   editUnit(ev) {
     var span = ev.target
     var input = ev.target.nextElementSibling
@@ -218,6 +228,7 @@ export default class extends Controller {
     input.focus()
   }
 
+  // salva o valor editado
   saveUnit(ev) {
     var span = ev.target.previousElementSibling
     var input = ev.target
@@ -238,6 +249,8 @@ export default class extends Controller {
     }
   }
 
+  // verifica se a celula ainda esta no estado de danger (quando o checkbox esta marcado na coluna com vazios)
+  // ela é chamada quando alguem edita uma celula
   dangerToSuccessRow(ev) {
     var controller = this
     if (ev.target.value == "|PREENCHER|") {
@@ -260,6 +273,7 @@ export default class extends Controller {
     }
   }
 
+
   bindOutput(span, field, value) {
     if (field == "order") {
       span.innerText = value
@@ -268,12 +282,14 @@ export default class extends Controller {
     }
   }
 
+  // chama func que vai criar um json para enviar para api
   sendCsv() {
     if (this.csv) {
       this.getCellValues()
     }
   }
   
+  // func que gera json para enviar para api
   getCellValues() {
     var table = this.tableCsvTarget
     var lines = [];
@@ -289,6 +305,7 @@ export default class extends Controller {
     this.saveCsv({ upload: lines })
   }
 
+  // contato com api
   saveCsv(data) {
     const token = $('meta[name=csrf-token]').attr('content');
     const url = "/uploads/entities/upload"
