@@ -1,65 +1,22 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["container", "uploadCol", "upload", "headTable", "bodyTable", "columnCell", "lineCell", "tableCsv"]
+  static targets = ["uploadCol", "upload", "headerTable", "bodyTable", "columnCell", "lineCell", "tableCsv"]
 
   connect() {
+    this.controllerName = `uploads--entities--index`
     this.doUpload()
-    // this.getCurrentUserPermissions()
-    // this.application.uploads = []
   }
 
   doUpload() {
-    var html = `<div class="row justify-content-center">
-                  <div class="col-3">
-                    <div class="card m-2 border-top-primary">
-                      <div class="card-header p-1 text-center s-title-0p7rem">
-                        <span>Card 1</span>
-                      </div>
-                      <div class="card-body text-center s-title-0p7rem">
-                        <h7>-</h7>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-3">
-                    <div class="card m-2 border-top-primary">
-                      <div class="card-header p-1 text-center s-title-0p7rem">
-                        <span>Card 2</span>
-                      </div>
-                      <div class="card-body text-center s-title-0p7rem">
-                        <h7>-</h7>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-3">
-                    <div class="card m-2 border-top-primary">
-                      <div class="card-header p-1 text-center s-title-0p7rem">
-                        <span>Card 3</span>
-                      </div>
-                      <div class="card-body text-center s-title-0p7rem">
-                        <h7>-</h7>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-3">
-                    <div class="card m-2 border-top-primary">
-                      <div class="card-header p-1 text-center s-title-0p7rem">
-                        <span>Card 4</span>
-                      </div>
-                      <div class="card-body text-center s-title-0p7rem">
-                        <h7>-</h7>
-                      </div>
-                    </div>
-                  </div>
-                </div>  
-                <div class="card m-2" style="width:100%;display:relative;" data-target="uploads--entities--index.cardBody">
+    var html = `<div class="card m-2" style="width:100%;display:relative;" data-target="${this.controllerName}.cardBody">
                   <div class="card-header">
                     <div class="row justify-content-md-center">
                       <div class="col-md-auto">
-                        <input type="file" id="fileinput" accept=".csv" data-target="uploads--entities--index.upload" data-action="change->uploads--entities--index#readSingleFile"/>
+                        <input type="file" id="fileinput" accept=".csv" data-target="${this.controllerName}.upload" data-action="change->${this.controllerName}#readSingleFile"/>
                       </div>
                       <div class="col-md-auto">
-                        <button data-action="click->uploads--entities--index#sendCsv">Submit</button>
+                        <button data-action="click->${this.controllerName}#sendCsv">Submit</button>
                       </div>
                     </div>
                   </div>
@@ -68,12 +25,12 @@ export default class extends Controller {
                       <div class="row">
                         <div class="col p-0">
                           <div class="table-responsive">
-                          <table data-target="uploads--entities--index.tableCsv" id="table0" class="table table-sm table-hover table-search" style="font-size:80%;">
+                          <table data-target="${this.controllerName}.tableCsv" id="table0" class="table table-sm table-hover table-search" style="font-size:80%;">
                             <h7>*Marque as colunas que não deseja valore vazios</h7><br>
                             <h7>*As linhas em vermelho possuem células com o valor |PREENCHER| que corresponde a vazio</h7><br>
-                            <thead data-target="uploads--entities--index.headTable" class="align-middle">
+                            <thead data-target="${this.controllerName}.headerTable" class="align-middle">
                             </thead>
-                            <tbody data-target="uploads--entities--index.bodyTable">
+                            <tbody data-target="${this.controllerName}.bodyTable">
                             </tbody>
                           </table>
                           </div>
@@ -81,85 +38,117 @@ export default class extends Controller {
                       </div>
                     </div>
                   </div>
-                  <div class="card-footer py-0" data-target="uploads--entities--index.footerTable"></div>
+                  <div class="card-footer py-0" data-target="${this.controllerName}.footerTable"></div>
                 </div>`
     
     this.uploadColTarget.innerHTML = html
   }
 
-  // le o arquivo selecionado no choose file
-  // salva ele no this.csv
-  // chama csv to table
+  // leitura de arquivo carregado atraves do input de arquivos na pagina
+  // funcao captura o evento de change no input
   readSingleFile(ev) {
-    //Retrieve the first (and only!) File from the FileList object
-    if(this.has_csv) {
-      this.headTableTarget.innerHTML = ``
-      this.bodyTableTarget.innerHTML = ``
+    // verifica se existe arquivo carregado na pagina
+    if(this.hasCsvOnPage) {
+      // controle para esvaziar o header gerado de arquivo anteriormente carregado
+      this.headerTableTarget.innerHTML = ``
+      
+      // controle para esvaziar a tabela gerada de arquivo anteriormente carregado 
+      this.bodyTableTarget.innerHTML = `` 
     } 
-    var f = ev.target.files[0];
-    if (f) {
-      var r = new FileReader();
-      const this_controller = this
-      r.onload = function (e) {
-        var contents = e.target.result;
-        this_controller.csv = contents
-        this_controller.has_csv = true
-        this_controller.csvToTable(this_controller.csv)
+
+    // insercao do arquivo em uma variavel local file
+    var file = ev.target.files[0];
+
+    // verifica se existe arquivo
+    if (file) { 
+      // leitura do arquivo carregado na pagina atraves da funcao do JS
+      var readedFile = new FileReader() 
+      var controller = this 
+
+      readedFile.onload = function (e) {
+        // inserir o conteudo do arquivo carreado em uma variavel global da pagina
+        controller.csv = e.target.result
+        // controlar se existe arquivo carregado na pagina 
+        controller.hasCsvOnPage = true 
+        // funcao que inicia o processo de quebrar o arquivo e inserir em uma tabela html
+        controller.csvToTable(controller.csv) 
       }
-      r.readAsText(f)
+
+      // necessario no script encontrado na internet
+      readedFile.readAsText(file) 
     } else {
-      alert("Failed to load file");
+      // falha na leitura do arquivo
+      console.log("Falha ao ler o arquivo") 
     }
   }
 
-  // transforma o csv na table html
-  // chama do header e do body table
+  // split dos headers por virgulas em um array em variavel global
+  // insercao   
   csvToTable(csv) {
-
+    // quebra do conteudo do arquivo em linhas procurando o fim do arquivo procurando o '\n'
+    // insercao dessa quebra no array global tableLines
     this.tableLines = csv.split("\n")
+    
+    // insercao do tamanho do tableLines na variavel global tableLinesLength
     this.tableLinesLength = this.tableLines.length
-    this.tableHeaders = this.tableLines[0].split(",")
-    this.tableHeadLength = this.tableHeaders.length
 
-    this.headTableTarget.insertAdjacentHTML("beforeend", this.doHeadTable())
+    // quebra do conteudo dos headers procurando as ','
+    // insercao dessa quebra no array global tableHeaders
+    this.tableHeaders = this.tableLines[0].split(",")
+    
+    // insercao do tamanho do tableHeaders na variavel global tableHeadersLength
+    this.tableHeadersLength = this.tableHeaders.length
+    
+    // adiciona o html dos headers na pagina
+    this.headerTableTarget.insertAdjacentHTML("beforeend", this.doHeadTable())
+    
+    // adiciona o html da table na pagina
     this.bodyTableTarget.insertAdjacentHTML("beforeend", this.doBodyTable())
 
   }
 
-  // constroi o header com a primeira linha do csv
+  // constroi o header a partir da variavel global tableHeaders
   doHeadTable() {
     var html = `<th>
                 <div class="col">
                   <label class="row">Posição</label> 
                 </div>
               </th>`
+
+    // each nos headers para adicionar o html na pagina
     this.tableHeaders.forEach(element => {
       html += `<th>
                 <div class="col">
                   <label class="row">${element}</label>
-                  <input class="row align-bottom" type="checkbox" value="${element}" data-action="click->uploads--entities--index#emptyLineValidate" data-target="uploads--entities--index.columnCell-${element}"> 
+                  <input class="row align-bottom" type="checkbox" value="${element}" data-action="click->${this.controllerName}#emptyLineValidate" data-target="${this.controllerName}.columnCell-${element}"> 
                 </div>
               </th>`
     })
-    return html;
+    return html
   }
 
-  // verifica se o checkbox marcado no header esta vazio nas linhas da tabela
+  // consulta na tabela se o checkbox marcado relacionado 
+  // possui alguma linha na tabela com valor vazio "|PREENCHER|""  
   emptyLineValidate(ev) {
     var controller = this
+    // caminha pelas linhas da tabela fora a linha 
+    // dos headers, por isso o index parte do 1
     for (var r = 1; r < this.tableLinesLength; r++) {
 
-      for (var c = 0; c < this.tableHeadLength; c++) {
+      // utiliza do tamanho do array global tableHeadersLength para caminhar pelas celulas 
+      for (var c = 0; c < this.tableHeadersLength; c++) {
 
         this.tableHeaders.forEach(function (element, i) {
           if (element == ev.target.value && ev.target.checked) {
-            // danger if empty
+            // se o valor da celula estiver vazio "|PREENCHER|" 
+            // a linha fica vermelha como alerta para o cliente 
             if (controller.nameTarget(`columnCell-${r}-${i}`).innerText == "|PREENCHER|") {
               controller.nameTarget(`lineCell-${r}`).classList.remove("table-success")
               controller.nameTarget(`lineCell-${r}`).classList.add("table-danger")
+
             }
           } else if (element == ev.target.value && !ev.target.checked) {
-            // success if empty
+            // se nao existir valor vazio a linha fica verde
             if (controller.nameTarget(`columnCell-${r}-${i}`).innerText == "|PREENCHER|") {
               controller.nameTarget(`lineCell-${r}`).classList.remove("table-danger")
               controller.nameTarget(`lineCell-${r}`).classList.add("table-success")
@@ -170,42 +159,52 @@ export default class extends Controller {
     }
   }
 
-  // constroi a tabela com os dados do csv
+  // constroi o html da tabela
   doBodyTable() {
+    // remove html da tabela de arquivos antigos
     var htmlColumn = ``
     var htmlRow = ``
     
-    for (var i = "1"; i < this.tableLinesLength; i++) {
+    // caminha pelas linhas da tabela fora a linha 
+    // dos headers, por isso o index parte do 1
+    for (var i = 1; i < this.tableLinesLength; i++) {
 
-      var currentline = this.tableLines[i].split(",");
+      // insere na variavel local currentLine o conteudo da linha 
+      var currentLine = this.tableLines[i].split(",")
       htmlColumn = ``
 
-      for (var j = 0; j < this.tableHeadLength; j++) {
-        if (currentline[j] == '') {
-          htmlColumn += `<td id="${i}" style="font-size:80%;" scope="col" class="table-10 p-1 align-middle table-success" data-target="uploads--entities--index.columnCell-${i}-${j}">
-                          <span class="text-bold justify" data-action="click->uploads--entities--index#editUnit">|PREENCHER|</span>
-                          <input autofocus data-field="order" data-action="keyup->uploads--entities--index#saveUnit change->uploads--entities--index#saveUnit blur->uploads--entities--index#saveUnit" class="form-control textarea p-1 s-title-0p85rem d-none" type="string" required>
+      // utiliza do tamanho do array global tableHeadersLength para caminhar pelas celulas 
+      for (var j = 0; j < this.tableHeadersLength; j++) {
+        // insere uma celula com valor vazio |PREENCHER| caso a celular esteja vazia
+        if (currentLine[j] == '') {
+          htmlColumn += `<td id="${i}" style="font-size:80%;" scope="col" class="table-10 p-1 align-middle table-success" data-target="${this.controllerName}.columnCell-${i}-${j}">
+                          <span class="text-bold justify" data-action="click->${this.controllerName}#editUnit">|PREENCHER|</span>
+                          <input autofocus data-field="order" data-action="keyup->${this.controllerName}#saveUnit change->${this.controllerName}#saveUnit blur->${this.controllerName}#saveUnit" class="form-control textarea p-1 s-title-0p85rem d-none" type="string" required>
                         </td>`
+        
+        // insere uma celula com o valor da currentLine
         } else {
-          htmlColumn += `<td id="${i}" style="font-size:80%;" scope="col" class="table-10 p-1 align-middle table-success" data-target="uploads--entities--index.columnCell-${i}-${j}">
-                          <span class="text-bold justify" data-action="click->uploads--entities--index#editUnit">${currentline[j]}</span>
-                          <input autofocus data-field="order" data-action="keyup->uploads--entities--index#saveUnit change->uploads--entities--index#saveUnit blur->uploads--entities--index#saveUnit" class="form-control textarea p-1 s-title-0p85rem d-none" type="string" required>
+          htmlColumn += `<td id="${i}" style="font-size:80%;" scope="col" class="table-10 p-1 align-middle table-success" data-target="${this.controllerName}.columnCell-${i}-${j}">
+                          <span class="text-bold justify" data-action="click->${this.controllerName}#editUnit">${currentLine[j]}</span>
+                          <input autofocus data-field="order" data-action="keyup->${this.controllerName}#saveUnit change->${this.controllerName}#saveUnit blur->${this.controllerName}#saveUnit" class="form-control textarea p-1 s-title-0p85rem d-none" type="string" required>
                         </td>`
         }
       }
-      htmlRow += `<tr data-target="uploads--entities--index.lineCell-${i}">
-                    <td style="font-size:80%;" scope="col" class="table-10 p-1 align-middle table-success" data-target="uploads--entities--index.columnCell-${i}">
+
+      // adiciona na linha o conteudo das celulas
+      htmlRow += `<tr data-target="${this.controllerName}.lineCell-${i}">
+                    <td style="font-size:80%;" scope="col" class="table-10 p-1 align-middle table-success" data-target="${this.controllerName}.columnCell-${i}">
                       <span class="text-bold">${i}</span>
                       <input autofocus data-field="order" class="form-control textarea p-1 s-title-0p85rem d-none" type="string" required>
                     </td>
                     ${htmlColumn}
-                    <td style="font-size:80%;" scope="col" class="table-10 p-1 align-middle table-success" data-target="uploads--entities--index.columnCell-${i}">
+                    <td style="font-size:80%;" scope="col" class="table-10 p-1 align-middle table-success" data-target="${this.controllerName}.columnCell-${i}">
                       <span class="text-bold"></span>
                       <input autofocus data-field="order" class="form-control textarea p-1 s-title-0p85rem d-none" type="string" required>
                     </td>
-                    <td style="font-size:80%;" scope="col" class="table-10 p-1 align-middle table-success" data-target="uploads--entities--index.columnCell-${i}">
+                    <td style="font-size:80%;" scope="col" class="table-10 p-1 align-middle table-success" data-target="${this.controllerName}.columnCell-${i}">
                       <span class="text-bold"></span>
-                      <button id=${i} data-action="click->uploads--entities--index#deleteLine" type="button" class="btn btn-sm btn-table editAuthor p-0" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remover linha"><span class="material-icons md-sm md-dark">delete</span></button>
+                      <button id=${i} data-action="click->${this.controllerName}#deleteLine" type="button" class="btn btn-sm btn-table editAuthor p-0" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remover linha"><span class="material-icons md-sm md-dark">delete</span></button>
                     </td>
                   </tr>`
     }
@@ -213,12 +212,12 @@ export default class extends Controller {
     return htmlRow;
   }
 
-  // remove a linha marcada pelo id
+  // remove a linha marcada pelo id usando o icone lixeira
   deleteLine(ev){
     this.nameTarget(`lineCell-${ev.target.parentElement.id}`).remove()
   }
 
-  // edita o valor da celula
+  // edita o valor da celula ao clicar em cima da celula
   editUnit(ev) {
     var span = ev.target
     var input = ev.target.nextElementSibling
@@ -228,7 +227,7 @@ export default class extends Controller {
     input.focus()
   }
 
-  // salva o valor editado
+  // salva o valor apos editar
   saveUnit(ev) {
     var span = ev.target.previousElementSibling
     var input = ev.target
@@ -244,13 +243,12 @@ export default class extends Controller {
       if (value != span.innerText && value != "") {
         this.bindOutput(span, field, value)
         this.dangerToSuccessRow(ev)
-        // const data = { session: { id: this.element.dataset.id, value: value, field: field }, current_user: { current_user_id: currentUser.id } }
       }
     }
   }
 
-  // verifica se a celula ainda esta no estado de danger (quando o checkbox esta marcado na coluna com vazios)
-  // ela é chamada quando alguem edita uma celula
+  // verifica se a celula ainda esta no estado vermelho
+  // ela e chamada quando o cliente edita uma celula
   dangerToSuccessRow(ev) {
     var controller = this
     if (ev.target.value == "|PREENCHER|") {
@@ -282,19 +280,18 @@ export default class extends Controller {
     }
   }
 
-  // chama func que vai criar um json para enviar para api
+  // evento chamado quando botao submit é clicado
   sendCsv() {
     if (this.csv) {
       this.getCellValues()
     }
   }
   
-  // func que gera json para enviar para api
+  // criar json a partir da tabela html alterada pelo clinete
   getCellValues() {
     var table = this.tableCsvTarget
     var lines = [];
     for (var r = 1, n = table.rows.length; r < n; r++) {
-      // console.log("line")
       var line = [];
       for (var c = 0, m = table.rows[r].cells.length - 3; c < m; c++) {
         line.push(this.tableHeaders[c].replace(/(\r\n|\n|\r)/gm, "") + ": " + table.rows[r].cells[c+1].innerText);
@@ -305,7 +302,7 @@ export default class extends Controller {
     this.saveCsv({ upload: lines })
   }
 
-  // contato com api
+  // fetch api
   saveCsv(data) {
     const token = $('meta[name=csrf-token]').attr('content');
     const url = "/uploads/entities/upload"
